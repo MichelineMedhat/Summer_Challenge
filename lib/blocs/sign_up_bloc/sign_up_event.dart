@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -60,13 +62,15 @@ class PasswordChanged extends SignUpEvent {
 
 class Submitted extends SignUpEvent {
   final User user;
+  final Uint8List imageData;
+  final String extenstion;
 
-  const Submitted({@required this.user});
+  const Submitted({@required this.user, @required this.imageData, @required this.extenstion});
 
   @override
-  List<Object> get props => [user];
+  List<Object> get props => [user, imageData];
 
   @override
-  String toString() => 'Submitted { user: $user }';
+  String toString() => 'Submitted { user: $user, imageData: $imageData, extenstion:$extenstion}';
 }
 

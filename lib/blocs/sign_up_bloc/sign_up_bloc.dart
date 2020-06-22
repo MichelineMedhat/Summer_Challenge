@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
@@ -48,24 +49,16 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       yield* _mapNameChangedToState(event.name);
     } else if (event is UsernameChanged) {
       yield* _mapUsernameChangedToState(event.username);
-    } else if (event is UsernameSubmitted) {
-      yield* _mapUsernameSubmittedToState(event.username);
     } else if (event is PasswordChanged) {
       yield* _mapPasswordChangedToState(event.password);
     } else if (event is Submitted) {
-      yield* _mapFormSubmittedToState(event.user);
+      yield* _mapFormSubmittedToState(event.user, event.imageData, event.extenstion);
     }
   }
 
   Stream<SignUpState> _mapNameChangedToState(String name) async* {
     yield state.update(
       isPasswordValid: name.isNotEmpty,
-    );
-  }
-
-   Stream<SignUpState> _mapUsernameSubmittedToState(String username) async* {
-    yield state.update(
-      isUsernameUsed : await UserRepository.isUsernameUsed(username),
     );
   }
 
@@ -81,9 +74,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     );
   }
 
-  Stream<SignUpState> _mapFormSubmittedToState(User user) async* {
+  Stream<SignUpState> _mapFormSubmittedToState(User user, Uint8List imageData, String extenstion) async* {
     yield SignUpState.loading();
     try {
+       user.profilePicture = 'https://firebasestorage.googleapis.com/v0/b/summer2020-628a8.appspot.com/o/images%2Fbasicprofilepicture.png?alt=media&token=7742bc1e-5e5f-4619-ab6f-5525be11f345';
+      if(imageData != null){
+      var path = await _userRepository.uploadImageFile(imageData, user.username, extenstion).then((value) => value.toString());
+      user.profilePicture = path;
+      }
       await _userRepository.signUp(user);
       yield SignUpState.success();
     } catch (err) {

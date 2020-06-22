@@ -71,6 +71,15 @@ class Auth {
     prefs.setString(_USERNAME, username);
     prefs.setString(_PASSWORD, password);
   }
+
+  Future<void> updateProfile(User user) async {
+    await _getDocRef(user.username).updateData({
+    'name': user.name,
+    'username': user.username,
+    'password': user.password,
+    'profilePicture': user.profilePicture,
+  });
+  }
 }
 
 class AuthException implements Exception {

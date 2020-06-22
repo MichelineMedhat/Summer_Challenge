@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
 
 import '../models/user.dart';
 import '../util/auth.dart';
@@ -30,6 +32,10 @@ class UserRepository {
     return await _auth.currentUser;
   }
 
+  Future<void> updateProfile( User user) async{
+    return await _auth.updateProfile(user);
+  }
+
   static Future<bool> isUsernameUsed(String username) async {
     final docs = await _db
         .collection('users')
@@ -38,4 +44,13 @@ class UserRepository {
 
     return docs.documents.isNotEmpty;
   }
+ 
+  Future<Uri> uploadImageFile(Uint8List imageBytes, String imageName, String extenstion) async {
+    fb.StorageReference storageRef = fb.storage().ref('images/$imageName$extenstion');
+    fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(imageBytes).future;
+    
+    Uri imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
+    return imageUri;
+}
+
 }

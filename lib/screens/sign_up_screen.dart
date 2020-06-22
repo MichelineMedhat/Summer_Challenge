@@ -1,10 +1,10 @@
-import 'dart:ui';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path/path.dart' as Path;
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:firebase/firebase.dart' as fb;
-
 
 import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/sign_up_bloc/bloc.dart';
@@ -12,7 +12,6 @@ import '../models/user.dart';
 import '../repositories/user_repository.dart';
 import '../widgets/rounded_button.dart';
 import '../widgets/outlined_text_field.dart';
-
 
 class SignUpScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -49,6 +48,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   SignUpBloc _signUpBloc;
   Image pickedImage;
+  fb.UploadTask _uploadTask;
 
   bool get isPopulated =>
       _nameController.text.isNotEmpty &&
@@ -66,27 +66,23 @@ class _SignUpFormState extends State<SignUpForm> {
     _nameController.addListener(_onNameChanged);
     _usernameController.addListener(_onUsernameChanged);
     _passwordController.addListener(_onPasswordChanged);
-    pickedImage = Image.asset('assets/logo.png');
+    pickedImage = Image.asset('assets/pp.png');
   }
 
+  String extenstion;
+  bool isImagePicked = false;
+  Uint8List data;
   pickImage() async {
-    Image fromPicker =
-        await ImagePickerWeb.getImage(outputType: ImageType.widget);
-    if (fromPicker != null) {
+    var mediaData = await ImagePickerWeb.getImageInfo;
+    extenstion = Path.extension(mediaData.fileName);
+    if (mediaData != null) {
       setState(() {
-        pickedImage = fromPicker;
+        data = mediaData.data;
+        pickedImage = Image.memory(data);
+        isImagePicked = true;
       });
     }
   }
-
-  Future<Uri> uploadImageFile(Image image,
-      {String imageName}) async {
-    fb.StorageReference storageRef = fb.storage().ref('images/$imageName');
-    fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(image).future;
-    
-    Uri imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
-    return imageUri;
-}
 
   @override
   Widget build(BuildContext context) {
@@ -172,6 +168,9 @@ class _SignUpFormState extends State<SignUpForm> {
                         OutlinedTextField(
                           textKey: 'Name',
                           controller: _nameController,
+                          validator: (_) {
+                            return !state.isNameValid ? 'Required' : null;
+                          },
                         ),
                         SizedBox(height: 32.0),
                         OutlinedTextField(
@@ -179,7 +178,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           controller: _usernameController,
                           validator: (_) {
                             return !state.isUsernameValid
-                                ? 'Invalid Username'
+                                ? 'Username Already Exists'
                                 : null;
                           },
                         ),
@@ -190,7 +189,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           controller: _passwordController,
                           validator: (_) {
                             return !state.isPasswordValid
-                                ? 'Invalid Password'
+                                ? 'Aktr mn 8 7erooof wi wa'
                                 : null;
                           },
                         ),
@@ -239,15 +238,14 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
-  void _onFormSubmitted() {
-    
-    uploadImageFile(pickedImage);
+  Future<void> _onFormSubmitted() async {
     User user = User(
       name: _nameController.text,
       username: _usernameController.text,
       password: _passwordController.text,
     );
-    
-    _signUpBloc.add(Submitted(user: user));
+
+    _signUpBloc
+        .add(Submitted(user: user, imageData: data, extenstion: extenstion));
   }
 }

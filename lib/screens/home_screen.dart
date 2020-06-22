@@ -13,12 +13,20 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.person), onPressed: (){},),
+        leading: IconButton(
+          icon: Icon(Icons.exit_to_app),
+          onPressed: () {
+            BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+          },
+        ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.exit_to_app),
+            icon: Icon(Icons.person),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.home),
             onPressed: () {
-              BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
             },
           )
         ],
@@ -27,6 +35,11 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Center(child: Text('Welcome ${user.name}!')),
+           CircleAvatar(
+                          child: Image.network(user.profilePicture),
+                          backgroundColor: Colors.transparent,
+                          radius: 100,
+                        ),  
         ],
       ),
     );

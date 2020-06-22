@@ -4,11 +4,13 @@ class User {
   String name;
   String username;
   String password;
+  String profilePicture;
 
   User({
     this.name,
     this.username,
     this.password,
+    this.profilePicture,
   });
 
   factory User.fromDocument(DocumentSnapshot doc) {
@@ -16,6 +18,7 @@ class User {
       name: doc['name'],
       username: doc['username'],
       password: doc['password'],
+      profilePicture: doc['profilePicture']
     );
   }
 
@@ -24,6 +27,7 @@ class User {
       'name': name,
       'username': username,
       'password': password,
+      'profilePicture':profilePicture,
     };
   }
 
@@ -33,6 +37,7 @@ class User {
       name: $name,
       username: $username,
       password: $password,
+      profilePicture: $profilePicture,
     }''';
   }
 }
