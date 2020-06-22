@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="A new Flutter project.">
+
+    <!-- iOS meta tags & icons -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="summer_challenge">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+
+    <title>summer_challenge</title>
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <!-- This script installs service_worker.js to provide PWA functionality to
+       application. For more information, see:
+       https://developers.google.com/web/fundamentals/primers/service-workers -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('flutter_service_worker.js');
+            });
+        }
+    </script>
+
+
+    <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
+    <script src="main.dart.js" type="application/javascript"></script>
+
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyCtLx2ZIJ0xmaPEPvsgGO1HMnwDDUU7Hl4",
+            authDomain: "summer2020-628a8.firebaseapp.com",
+            databaseURL: "https://summer2020-628a8.firebaseio.com",
+            projectId: "summer2020-628a8",
+            storageBucket: "summer2020-628a8.appspot.com",
+            messagingSenderId: "228370527764",
+            appId: "1:228370527764:web:1c571ae6fb6d3269989901"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+    </script>
+    <script src="main.dart.js" type="application/javascript"></script>
+</body>
+
+</html>

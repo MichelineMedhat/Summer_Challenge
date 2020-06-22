@@ -1,0 +1,36 @@
+name: summer_challenge
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+# publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.2.0
+  meta: ^1.1.6
+  equatable: ^1.0.0
+  image_picker_web: ^1.0.9
+  cloud_firestore: ^0.13.7
+  cupertino_icons: ^0.1.3
+  shared_preferences: ^0.5.4+8
+  shared_preferences_web: ^0.1.0
+  universal_html: ^1.2.3
+  fluro: ^1.4.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/background.jpeg
+    - assets/logo.png
