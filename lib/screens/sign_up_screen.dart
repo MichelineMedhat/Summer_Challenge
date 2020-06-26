@@ -141,7 +141,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AnimatedSwitcher(
-                              duration: Duration(milliseconds: 300),
+                              duration: Duration(milliseconds: 200),
                               switchInCurve: Curves.easeIn,
                               child: CircleAvatar(
                                     backgroundColor: Colors.transparent,

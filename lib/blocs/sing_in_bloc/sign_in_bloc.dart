@@ -52,7 +52,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
   Stream<SignInState> _mapEmailChangedToState(String username) async* {
     yield state.update(
-      isUsernameValid: Validators.isValidUsername(username),
+      isUsernameValid: await UserRepository.isUsernameUsed(username),
     );
   }
 

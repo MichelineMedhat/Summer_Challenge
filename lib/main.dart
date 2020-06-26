@@ -3,24 +3,25 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'blocs/app_bloc_delegate.dart';
 import 'blocs/authentication_bloc/bloc.dart';
+import 'blocs/post_bloc/post_bloc.dart';
 import 'repositories/user_repository.dart';
 import 'screens/home_screen.dart';
 import 'screens/sign_in_screen.dart';
 import 'screens/splash_screen.dart';
 
-
-
 void main() {
   //WidgetsFlutterBinding.ensureInitialized();
   //BlocSupervisor.delegate = AppBlocDelegate();
   final UserRepository userRepository = UserRepository();
-  runApp(
+  runApp(MultiBlocProvider(providers: [
     BlocProvider(
-      child: App(userRepository: userRepository),
       create: (context) =>
           AuthenticationBloc(userRepository: userRepository)..add(AppStarted()),
     ),
-  );
+    BlocProvider<PostBloc>(
+      create: (BuildContext context) => PostBloc(),
+    )
+  ], child: App(userRepository: userRepository)));
 }
 
 class App extends StatelessWidget {
