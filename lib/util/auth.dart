@@ -74,7 +74,7 @@ class Auth {
 
   Future<void> updateProfile(User user) async {
     await _getDocRef(user.username).updateData({
-    'name': user.name,
+    'phoneNumber': user.phoneNumber,
     'username': user.username,
     'password': user.password,
     'profilePicture': user.profilePicture,

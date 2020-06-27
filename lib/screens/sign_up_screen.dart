@@ -42,18 +42,19 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _secretKeyController = TextEditingController();
 
   SignUpBloc _signUpBloc;
   Image pickedImage;
-  fb.UploadTask _uploadTask;
 
   bool get isPopulated =>
-      _nameController.text.isNotEmpty &&
+      _phoneNumberController.text.isNotEmpty &&
       _usernameController.text.isNotEmpty &&
-      _passwordController.text.isNotEmpty;
+      _passwordController.text.isNotEmpty &&
+      _secretKeyController.text.isNotEmpty;
 
   bool isSignUpButtonEnabled(SignUpState state) {
     return state.isFormValid && isPopulated && !state.isSubmitting;
@@ -63,9 +64,10 @@ class _SignUpFormState extends State<SignUpForm> {
   void initState() {
     super.initState();
     _signUpBloc = BlocProvider.of<SignUpBloc>(context);
-    _nameController.addListener(_onNameChanged);
+    _phoneNumberController.addListener(_onPhoneNumberChanged);
     _usernameController.addListener(_onUsernameChanged);
     _passwordController.addListener(_onPasswordChanged);
+    _secretKeyController.addListener(_onSecretKeyChanged);
     pickedImage = Image.asset('assets/pp.png');
   }
 
@@ -166,34 +168,45 @@ class _SignUpFormState extends State<SignUpForm> {
                         ),
                         SizedBox(height: 48.0),
                         OutlinedTextField(
-                          textKey: 'Name',
-                          controller: _nameController,
+                          textKey: 'PhoneNumber',
+                          controller: _phoneNumberController,
                           validator: (_) {
-                            return !state.isNameValid ? 'Required' : null;
+                            return !state.isPhoneNumberValid ? 'Required*' : null;
                           },
                         ),
-                        SizedBox(height: 32.0),
+                        SizedBox(height: 24.0),
                         OutlinedTextField(
                           textKey: 'Username',
                           controller: _usernameController,
                           validator: (_) {
                             return !state.isUsernameValid
-                                ? 'Username Already Exists'
+                                ? 'Username Already Exists, ex:MichelineMedhat'
                                 : null;
                           },
                         ),
-                        SizedBox(height: 32.0),
+                        SizedBox(height: 24.0),
                         OutlinedTextField(
                           textKey: 'Password',
                           obscureText: true,
                           controller: _passwordController,
                           validator: (_) {
                             return !state.isPasswordValid
-                                ? 'Aktr mn 8 7erooof wi wa'
+                                ? 'More Than 8 7erooof wi waaa'
                                 : null;
                           },
                         ),
-                        SizedBox(height: 48.0),
+                        SizedBox(height: 24.0),
+                        OutlinedTextField(
+                          textKey: 'Secret Key',
+                          obscureText: true,
+                          controller: _secretKeyController,
+                          validator: (_) {
+                            return !state.isSecretKeyValid
+                                ? 'Ask el 5adema 3aleh :) See you Soon ♥'
+                                : null;
+                          },
+                        ),
+                         SizedBox(height: 32.0),
                         RoundedButton(
                           textKey: 'Sign up',
                           onPressed: isSignUpButtonEnabled(state)
@@ -214,21 +227,27 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _phoneNumberController.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  void _onNameChanged() {
+  void _onPhoneNumberChanged() {
     _signUpBloc.add(
-      NameChanged(name: _nameController.text),
+      PhoneNumberChanged(phoneNumber: _phoneNumberController.text),
+    );
+  }
+
+  void _onSecretKeyChanged() {
+    _signUpBloc.add(
+      SecretKeyChanged(secretKey: _secretKeyController.text),
     );
   }
 
   void _onUsernameChanged() {
     _signUpBloc.add(
-      UsernameChanged(username: _usernameController.text),
+      UsernameChanged(username: _usernameController.text.toLowerCase()),
     );
   }
 
@@ -240,8 +259,8 @@ class _SignUpFormState extends State<SignUpForm> {
 
   Future<void> _onFormSubmitted() async {
     User user = User(
-      name: _nameController.text,
-      username: _usernameController.text,
+      phoneNumber: _phoneNumberController.text,
+      username: _usernameController.text.toLowerCase(),
       password: _passwordController.text,
     );
 

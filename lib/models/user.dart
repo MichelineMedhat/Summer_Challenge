@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
-  String name;
+  String phoneNumber;
   String username;
   String password;
   String profilePicture;
 
   User({
-    this.name,
+    this.phoneNumber,
     this.username,
     this.password,
     this.profilePicture,
@@ -15,7 +15,7 @@ class User {
 
   factory User.fromDocument(DocumentSnapshot doc) {
     return User(
-      name: doc['name'],
+      phoneNumber: doc['phoneNumber'],
       username: doc['username'],
       password: doc['password'],
       profilePicture: doc['profilePicture']
@@ -24,7 +24,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': name,
+      'phoneNumber': phoneNumber,
       'username': username,
       'password': password,
       'profilePicture':profilePicture,
@@ -34,7 +34,7 @@ class User {
   @override
   String toString() {
     return '''User {
-      name: $name,
+      phoneNumber: $phoneNumber,
       username: $username,
       password: $password,
       profilePicture: $profilePicture,

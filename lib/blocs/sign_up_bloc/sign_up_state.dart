@@ -2,22 +2,24 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SignUpState {
-  final bool isNameValid;
+  final bool isPhoneNumberValid;
   final bool isUsernameValid;
   final bool isPasswordValid;
   final bool isUsernameUsed;
+  final bool isSecretKeyValid;
   final bool isSubmitting;
   final bool isSuccess;
   final bool isFailure;
 
   bool get isFormValid =>
-      isNameValid && isUsernameValid && isPasswordValid;
+      isPhoneNumberValid && isUsernameValid && isPasswordValid && isSecretKeyValid;
 
   SignUpState({
-    @required this.isNameValid,
+    @required this.isPhoneNumberValid,
     @required this.isUsernameValid,
     @required this.isPasswordValid,
     @required this.isUsernameUsed,
+    @required this.isSecretKeyValid,
     @required this.isSubmitting,
     @required this.isSuccess,
     @required this.isFailure,
@@ -25,10 +27,11 @@ class SignUpState {
 
   factory SignUpState.empty() {
     return SignUpState(
-      isNameValid: true,
+      isPhoneNumberValid: true,
       isUsernameValid: true,
       isPasswordValid: true,
       isUsernameUsed:true,
+      isSecretKeyValid:true,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -37,10 +40,11 @@ class SignUpState {
 
   factory SignUpState.loading() {
     return SignUpState(
-      isNameValid: true,
+      isPhoneNumberValid: true,
       isUsernameValid: true,
       isPasswordValid: true,
       isUsernameUsed: true,
+      isSecretKeyValid:true,
       isSubmitting: true,
       isSuccess: false,
       isFailure: false,
@@ -49,10 +53,11 @@ class SignUpState {
 
   factory SignUpState.failure() {
     return SignUpState(
-      isNameValid: true,
+      isPhoneNumberValid: true,
       isUsernameValid: true,
       isPasswordValid: true,
       isUsernameUsed: true,
+      isSecretKeyValid: true,
       isSubmitting: false,
       isSuccess: false,
       isFailure: true,
@@ -61,10 +66,11 @@ class SignUpState {
 
   factory SignUpState.success() {
     return SignUpState(
-      isNameValid: true,
+      isPhoneNumberValid: true,
       isUsernameValid: true,
       isPasswordValid: true,
       isUsernameUsed: true,
+      isSecretKeyValid: true,
       isSubmitting: false,
       isSuccess: true,
       isFailure: false,
@@ -72,16 +78,18 @@ class SignUpState {
   }
 
   SignUpState update({
-    bool isNameValid,
+    bool isPhoneNumberValid,
     bool isUsernameValid,
     bool isPasswordValid,
     bool isUsernameUsed,
+    bool isSecretKeyValid,
   }) {
     return copyWith(
-      isNameValid: isNameValid,
+      isPhoneNumberValid: isPhoneNumberValid,
       isUsernameValid: isUsernameValid,
       isPasswordValid: isPasswordValid,
       isUsernameUsed: isUsernameUsed,
+      isSecretKeyValid: isSecretKeyValid,
       isSubmitting: false,
       isSuccess: false,
       isFailure: false,
@@ -89,20 +97,22 @@ class SignUpState {
   }
 
   SignUpState copyWith({
-    bool isNameValid,
+    bool isPhoneNumberValid,
     bool isUsernameValid,
     bool isPasswordValid,
     bool isUsernameUsed,
+    bool isSecretKeyValid,
     bool isSubmitEnabled,
     bool isSubmitting,
     bool isSuccess,
     bool isFailure,
   }) {
     return SignUpState(
-      isNameValid: isNameValid ?? this.isNameValid,
+      isPhoneNumberValid: isPhoneNumberValid ?? this.isPhoneNumberValid,
       isUsernameValid: isUsernameValid ?? this.isUsernameValid,
       isPasswordValid: isPasswordValid ?? this.isPasswordValid,
       isUsernameUsed: isUsernameUsed?? this.isUsernameUsed,
+      isSecretKeyValid: isSecretKeyValid?? this.isSecretKeyValid,
       isSubmitting: isSubmitting ?? this.isSubmitting,
       isSuccess: isSuccess ?? this.isSuccess,
       isFailure: isFailure ?? this.isFailure,
@@ -112,10 +122,11 @@ class SignUpState {
   @override
   String toString() {
     return '''SignUpState {
-      isNameValid: $isNameValid,
+      isPhoneNumberValid: $isPhoneNumberValid,
       isUsernameValid: $isUsernameValid,
       isPasswordValid: $isPasswordValid,
       isUsernameUsed: $isUsernameUsed,
+      isSecretKeyValid: $isSecretKeyValid,
       isSubmitting: $isSubmitting,
       isSuccess: $isSuccess,
       isFailure: $isFailure,

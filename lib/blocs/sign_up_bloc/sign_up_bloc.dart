@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:summer_challenge/util/secretKey.dart';
 
 import '../../models/user.dart';
 import '../../repositories/user_repository.dart';
@@ -26,13 +27,13 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Stream<SignUpState> Function(SignUpEvent event) next,
   ) {
     final nonDebounceStream = events.where((event) {
-      return (event is! NameChanged &&
+      return (event is! PhoneNumberChanged &&
           event is! UsernameChanged &&
           event is! PasswordChanged &&
           event is! UsernameSubmitted);
     });
     final debounceStream = events.where((event) {
-      return (event is NameChanged ||
+      return (event is PhoneNumberChanged ||
           event is UsernameChanged ||
           event is PasswordChanged || 
           event is UsernameSubmitted);
@@ -45,26 +46,34 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
   @override
   Stream<SignUpState> mapEventToState(SignUpEvent event) async* {
-    if (event is NameChanged) {
-      yield* _mapNameChangedToState(event.name);
+    if (event is PhoneNumberChanged) {
+      yield* _mapPhoneNumberChangedToState(event.phoneNumber);
     } else if (event is UsernameChanged) {
       yield* _mapUsernameChangedToState(event.username);
     } else if (event is PasswordChanged) {
       yield* _mapPasswordChangedToState(event.password);
+    } else if (event is SecretKeyChanged){
+      yield* _mapSecretKeyChangedToState(event.secretKey);
     } else if (event is Submitted) {
       yield* _mapFormSubmittedToState(event.user, event.imageData, event.extenstion);
     }
   }
 
-  Stream<SignUpState> _mapNameChangedToState(String name) async* {
+  Stream<SignUpState> _mapPhoneNumberChangedToState(String phoneNumber) async* {
     yield state.update(
-      isPasswordValid: name.isNotEmpty,
+      isPhoneNumberValid: Validators.isValidPhoneNumber(phoneNumber),
+    );
+  }
+
+    Stream<SignUpState> _mapSecretKeyChangedToState(String secretKey) async* {
+    yield state.update(
+      isSecretKeyValid: secretKey ==  SecretKey.secretKey,
     );
   }
 
   Stream<SignUpState> _mapUsernameChangedToState(String username) async* {
     yield state.update(
-      isUsernameValid: !await UserRepository.isUsernameUsed(username),
+      isUsernameValid: !await UserRepository.isUsernameUsed(username) && Validators.isValidUsername(username),
     );
   }
 

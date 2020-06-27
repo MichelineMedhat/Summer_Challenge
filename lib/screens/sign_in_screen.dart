@@ -195,7 +195,7 @@ class _SignInState extends State<SignInForm> {
   void _onFormSubmitted() {
     _signInBloc.add(
       SignInWithCredentialsPressed(
-        username: _usernameController.text,
+        username: _usernameController.text.toLowerCase(),
         password: _passwordController.text,
       ),
     );

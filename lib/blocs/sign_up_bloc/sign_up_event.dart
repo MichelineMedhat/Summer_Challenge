@@ -12,16 +12,16 @@ abstract class SignUpEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class NameChanged extends SignUpEvent {
-  final String name;
+class PhoneNumberChanged extends SignUpEvent {
+  final String phoneNumber;
 
-  const NameChanged({@required this.name});
-
-  @override
-  List<Object> get props => [name];
+  const PhoneNumberChanged({@required this.phoneNumber});
 
   @override
-  String toString() => 'NameChanged { name: $name }';
+  List<Object> get props => [phoneNumber];
+
+  @override
+  String toString() => 'PhoneNumberChanged { phoneNumber: $phoneNumber }';
 }
 
 class UsernameChanged extends SignUpEvent {
@@ -36,6 +36,18 @@ class UsernameChanged extends SignUpEvent {
   String toString() => 'UsernameChanged { username :$username }';
 }
 
+
+class SecretKeyChanged extends SignUpEvent {
+  final String secretKey;
+
+  const SecretKeyChanged({@required this.secretKey});
+
+  @override
+  List<Object> get props => [SecretKeyChanged];
+
+  @override
+  String toString() => 'SecretKeyChanged { SecretKeyChanged :$SecretKeyChanged }';
+}
 
 class UsernameSubmitted extends SignUpEvent {
   final String username;
@@ -65,12 +77,15 @@ class Submitted extends SignUpEvent {
   final Uint8List imageData;
   final String extenstion;
 
-  const Submitted({@required this.user, @required this.imageData, @required this.extenstion});
+  const Submitted(
+      {@required this.user,
+      @required this.imageData,
+      @required this.extenstion});
 
   @override
-  List<Object> get props => [user, imageData];
+  List<Object> get props => [user, imageData, extenstion];
 
   @override
-  String toString() => 'Submitted { user: $user, imageData: $imageData, extenstion:$extenstion}';
+  String toString() =>
+      'Submitted { user: $user, imageData: $imageData, extenstion:$extenstion}';
 }
-
