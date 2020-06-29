@@ -1,16 +1,15 @@
-# summer_challenge
+# Summer Corona 2020
 
-A new Flutter project.
+It's a secure flutter website coded with love for prep students to enagage them into activities during the pandemic.
 
-## Getting Started
+## How to use
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Download Flutter Web](https://flutter.dev/docs/get-started/web).
+- Create a New Project on Firebase.
+- Create a web project on Firebase and exchange your firebaseConfig with the one in [user -> web -> index.html].
+- Create secretKey.dart in [user -> util]
+```
+class SecretKey{
+   static String secretKey = 'your_secret_key';
+}
+```
