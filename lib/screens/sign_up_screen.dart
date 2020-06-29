@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:path/path.dart' as Path;
 import 'package:image_picker_web/image_picker_web.dart';
-import 'package:firebase/firebase.dart' as fb;
 
 import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/sign_up_bloc/bloc.dart';

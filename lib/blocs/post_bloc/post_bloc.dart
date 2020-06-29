@@ -9,25 +9,44 @@ import 'bloc.dart';
 
 class PostBloc extends Bloc<PostEvent, PostState> {
   StreamSubscription _postSubscription;
+
   @override
   PostState get initialState => AllPostsLoading();
 
   @override
   Stream<PostState> mapEventToState(PostEvent event) async* {
     if (event is AddPost) {
-      yield* _mapAddtEventToState(event.post, event.image, event.extenstion);
+      yield* _mapAddPostEventToState(event.post, event.image, event.extenstion);
     } else if (event is LoadPosts) {
       yield* _mapLoadPostsToState();
+    } else if (event is UpdatePosts) {
+      yield AllPostsLoaded(posts: event.posts);
+    } else if (event is FilterChanged) {
+      yield* _mapFilterChangedToState(event.filter);
+    }
+  }
+
+  Stream<PostState> _mapFilterChangedToState(String filter) async* {
+    var char = filter[0];
+    filter = filter.substring(1);
+    print('ana geet hena');
+    if (char == '#') {
+      PostRepository.getHashtagsFilter(filter)
+          .listen((posts) => add(UpdatePosts(posts: posts)));
+    }
+    if (char == '@') {
+      PostRepository.getUsersFilter(filter)
+          .listen((posts) => add(UpdatePosts(posts: posts)));
     }
   }
 
   Stream<PostState> _mapLoadPostsToState() async* {
     _postSubscription?.cancel();
     _postSubscription = PostRepository.getAllPosts()
-        .listen((posts) => UpdatePosts(posts: posts));
+        .listen((posts) => add(UpdatePosts(posts: posts)));
   }
 
-  Stream<PostState> _mapAddtEventToState(
+  Stream<PostState> _mapAddPostEventToState(
       Post post, Uint8List imageBytes, String extenstion) async* {
     yield PostUploading();
     try {

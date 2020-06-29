@@ -53,3 +53,7 @@ class PostNotUploaded extends PostState {
   String toString() => 'PostNotUploaded';
 }
 
+class FilteringPosts extends PostState{
+   @override
+  String toString() => 'FilteringPosts';
+}

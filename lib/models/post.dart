@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
   String username;
+  String userProfilePicture;
   String uri;
   String status;
   String hashtag;
@@ -9,6 +10,7 @@ class Post {
 
   Post({
     this.username,
+    this.userProfilePicture,
     this.uri,
     this.status,
     this.hashtag,
@@ -18,6 +20,7 @@ class Post {
   factory Post.fromDocument(DocumentSnapshot doc) {
     return Post(
       username: doc['username'],
+      userProfilePicture: doc['userProfilePicture'],
       uri: doc['uri'],
       status: doc['status'],
       hashtag: doc['hashtag'],
@@ -27,7 +30,8 @@ class Post {
 
   Map<String, dynamic> toMap() {
     return {
-      username: username,
+      'username': username,
+      'userProfilePicture': userProfilePicture,
       'uri': uri,
       'status': status,
       'hashtag': hashtag,
@@ -39,6 +43,7 @@ class Post {
   String toString() {
     return '''Post {
       username: $username,
+      userProfilePicture" $userProfilePicture,
       uri: $uri,
       status: $status,
       hashtag: $hashtag,

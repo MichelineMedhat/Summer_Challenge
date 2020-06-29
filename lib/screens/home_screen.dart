@@ -4,13 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:summer_challenge/blocs/post_bloc/bloc.dart';
-import 'package:summer_challenge/models/post.dart';
-import 'package:summer_challenge/screens/home_page.dart';
-import 'package:summer_challenge/screens/houses_page.dart';
-import 'package:summer_challenge/screens/profile_page.dart';
-import 'package:summer_challenge/widgets/post_dialog.dart';
 
+import '../blocs/post_bloc/bloc.dart';
+import '../models/post.dart';
+import '../screens/home_page.dart';
+import '../screens/houses_page.dart';
+import '../widgets/post_dialog.dart';
 import '../blocs/post_bloc/post_bloc.dart';
 import '../blocs/authentication_bloc/bloc.dart';
 import '../models/user.dart';
@@ -76,7 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
         pageSnapping: false,
         children: [
           HousesPage(user: widget.user),
-          ProfilePage(user: widget.user),
           HomePage(user: widget.user),
         ],
       ),
@@ -142,8 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
             statusEditingController = PostDialog.statusEditingController;
               Post post = Post(
                   status: statusEditingController.text,
-                  hashtag: statusEditingController.text,
+                  hashtag: hashtagEditingController.text,
                   username: widget.user.username,
+                  userProfilePicture: widget.user.profilePicture,
                   timestamp: Timestamp.now());
 
               postBloc.add(AddPost(

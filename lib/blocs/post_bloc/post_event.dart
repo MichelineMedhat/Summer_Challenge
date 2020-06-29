@@ -35,11 +35,25 @@ class AddPost extends PostEvent {
   final Uint8List image;
   final String extenstion;
 
-  const AddPost({@required this.post, @required this.image, @required this.extenstion});
+  const AddPost(
+      {@required this.post, @required this.image, @required this.extenstion});
 
   @override
   List<Object> get props => [post, image, extenstion];
 
   @override
-  String toString() => 'AddPost { post: $post, image: $image, extenstion: $extenstion }';
+  String toString() =>
+      'AddPost { post: $post, image: $image, extenstion: $extenstion }';
+}
+
+class FilterChanged extends PostEvent {
+  final String filter;
+
+  const FilterChanged({@required this.filter});
+
+  @override
+  List<Object> get props => [filter];
+
+  @override
+  String toString() => 'FilterChanged { filter: $filter }';
 }

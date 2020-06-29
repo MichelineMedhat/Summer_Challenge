@@ -117,6 +117,8 @@ class _PostDialogState extends State<PostDialog> {
   void dispose() {
     PostDialog.statusEditingController.dispose();
     PostDialog.hashtagEditingController.dispose();
+    PostDialog.data = null;
+
     super.dispose();
   }
 }
