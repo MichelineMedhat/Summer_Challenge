@@ -50,62 +50,69 @@ class _PostDialogState extends State<PostDialog> {
       title: ListTile(
         title: Text(
           'Add Post',
-          style: TextStyle(fontSize: 24),
+          style: TextStyle(fontSize: MediaQuery.of(context).size.width / 64, color: Colors.grey),
         ),
         leading: Icon(
           Icons.center_focus_weak,
-          size: 28,
+          size: MediaQuery.of(context).size.width / 40,
         ),
       ),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            TextField(
-              controller: PostDialog.statusEditingController,
-              minLines: 1,
-              maxLines: 7,
-            ),
-            TextField(
-              controller: PostDialog.hashtagEditingController,
-              decoration: InputDecoration(
-                prefixText: '#',
+      content: Container(
+        width: MediaQuery.of(context).size.width / 3,
+        child: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              TextField(
+                controller: PostDialog.statusEditingController,
+                keyboardType: TextInputType.multiline,
+                minLines: 1,
+                maxLines: 7,
+                decoration: InputDecoration(hintText: 'Your post here ...', hintStyle: TextStyle(fontSize: MediaQuery.of(context).size.width / 90)),
               ),
-            ),
-            Row(
-              children: [
-                AnimatedSwitcher(
-                  duration: Duration(milliseconds: 200),
-                  switchInCurve: Curves.easeIn,
-                  child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 100,
-                        child: Container(
-                          child: pickedImage,
-                        ),
-                      ) ??
-                      Container(),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 60.0),
-                  child: IconButton(
+              TextField(
+                controller: PostDialog.hashtagEditingController,
+                decoration:
+                    InputDecoration(prefixText: '#', hintText: 'hashtag', hintStyle: TextStyle(fontSize: MediaQuery.of(context).size.width / 90)),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  AnimatedSwitcher(
+                    duration: Duration(milliseconds: 200),
+                    switchInCurve: Curves.easeIn,
+                    child: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            radius: MediaQuery.of(context).size.width / 16,
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(
+                                    MediaQuery.of(context).size.width / 16),
+                                child: pickedImage)) ??
+                        Container(),
+                  ),
+                  IconButton(
                     icon: Icon(
                       Icons.camera_alt,
-                      size: 30.0,
+                      size: MediaQuery.of(context).size.width / 60,
+                      color: Colors.grey,
                     ),
                     onPressed: () => pickImage(),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       actions: <Widget>[
         FlatButton(
           child: Text('Post Yala',
               style: TextStyle(
-                fontSize: 16,
-                color: Colors.red,
+                fontSize: MediaQuery.of(context).size.width / 72,
+                color: Colors.blue,
               )),
           onPressed: widget.onPressed,
         ),
