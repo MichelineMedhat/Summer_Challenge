@@ -27,44 +27,58 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Container(
-        child: Center(
-          child: Column(
-            children: [
-              TextField(
-                controller: _filterTextEditController,
-                onSubmitted: (_) => _onFilterSubmitted(),
-              ),
-              Container(
-                width: 500,
-                child: BlocBuilder<PostBloc, PostState>(
-                  builder: (context, state) {
-                    if (state is AllPostsLoading) {
-                      return Container(
-                        child: Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [CircularProgressIndicator()],
-                          ),
-                        ),
-                      );
-                    } else if (state is AllPostsLoaded) {
-                      return ListView.builder(
-                          itemCount: state.posts.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            return PostWidget(post: state.posts[index]);
-                          });
-                    } else {
-                      return Text('Please Check your internet Connection');
-                    }
-                  },
+      padding: EdgeInsets.all(MediaQuery.of(context).size.width / 32),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width / 1.9,
+            height: MediaQuery.of(context).size.height / 18,
+            child: TextField(
+              controller: _filterTextEditController,
+              onSubmitted: (_) => _onFilterSubmitted(),
+              decoration: InputDecoration(
+                hintText: 'Search posts',
+                border: new OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    const Radius.circular(30.0),
+                  ),
                 ),
+                prefixIcon: Icon(Icons.search),
               ),
-            ],
+            ),
           ),
-        ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 16,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width / 2,
+            child: BlocBuilder<PostBloc, PostState>(
+              builder: (context, state) {
+                if (state is AllPostsLoading) {
+                  return Container(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [CircularProgressIndicator()],
+                      ),
+                    ),
+                  );
+                } else if (state is AllPostsLoaded) {
+                  return ListView.builder(
+                      itemCount: state.posts.length,
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return PostWidget(post: state.posts[index]);
+                      });
+                } else {
+                  return Text('Please Check your internet Connection');
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -72,15 +86,16 @@ class _HomePage extends State<HomePage> {
   void _onFilterSubmitted() {
     postBloc.add(FilterChanged(filter: _filterTextEditController.text));
   }
-  void _onFilerChanged(){
-    if (_filterTextEditController.text == ''){
-        BlocProvider.of<PostBloc>(context).add(LoadPosts());
+
+  void _onFilerChanged() {
+    if (_filterTextEditController.text == '') {
+      BlocProvider.of<PostBloc>(context).add(LoadPosts());
     }
   }
 
   @override
   void dispose() {
-   _filterTextEditController.dispose();
+    _filterTextEditController.dispose();
     super.dispose();
   }
 }

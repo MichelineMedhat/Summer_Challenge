@@ -26,19 +26,26 @@ class PostWidget extends StatelessWidget {
         children: [
           Container(
             child: post.uri != null
-                ? Image.network(
-                    post.uri,
-                    fit: BoxFit.contain,
-                    cacheWidth: 512,
+                ? Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 3.5,
+                    child: Image.network(
+                      post.uri,
+                      fit: BoxFit.contain,
+                      cacheWidth: 512,
+                    ),
                   )
                 : Container(),
           ),
           SizedBox(
-            height: 20,
+            height: MediaQuery.of(context).size.height / 32,
           ),
           Text(
             post.status,
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 64),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 32,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,24 +54,36 @@ class PostWidget extends StatelessWidget {
               CircleAvatar(
                     backgroundColor: Colors.transparent,
                     radius: 30,
-                    child: ClipOval(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(
+                          MediaQuery.of(context).size.width / 12),
                       child: Image.network(post.userProfilePicture),
                     ),
                   ) ??
                   Container(),
-              SizedBox(width: 16),
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     '@${post.username}',
                     style: TextStyle(
-                        color: Colors.grey, fontWeight: FontWeight.bold),
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.width / 72),
                   ),
-                  Text(
-                    '#${post.hashtag}',
-                    style: TextStyle(
-                        color: Colors.blueAccent, fontWeight: FontWeight.bold),
-                  )
+                  Container(
+                    width: MediaQuery.of(context).size.width / 8,
+                    child: Text(
+                      '#${post.hashtag}',
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 5,
+                      style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width / 72,
+                          color: Colors.blueAccent,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
               ),
             ],
