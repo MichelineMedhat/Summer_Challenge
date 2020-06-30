@@ -18,6 +18,7 @@ class House extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      hoverColor: Colors.transparent,
       onTap: () {},
       child: Container(
         margin: EdgeInsets.all(8),
@@ -28,56 +29,79 @@ class House extends StatelessWidget {
             BoxShadow(color: Colors.grey, spreadRadius: 0.5),
           ],
         ),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
-                child: Image.asset(
-                  'assets/$imageName',
-                  width: MediaQuery.of(context).size.width / 3,
-                  height: MediaQuery.of(context).size.width / 6,
-                )),
-            Text(
-              '#${this.houseName}',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: MediaQuery.of(context).size.width / 75),
+        child: Column(children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Zoom Link: ',
-                    style: TextStyle(
-                        fontSize: MediaQuery.of(context).size.width / 75)),
-                InkWell(
-                    child: new Text(
-                      '$zoomLink',
-                      style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: MediaQuery.of(context).size.width / 75),
-                    ),
-                    onTap: () => launch('$zoomLink')),
-              ],
+            clipBehavior: Clip.antiAlias,
+            child: Image.asset(
+              'assets/$imageName',
+              fit: BoxFit.fitWidth,
             ),
-            Text('Zoom Date: $zoomDate',
-                style: TextStyle(
-                    fontSize: MediaQuery.of(context).size.width / 75)),
-            SizedBox(
-              width: MediaQuery.of(context).size.width / 14,
-              height: MediaQuery.of(context).size.width / 40,
-              child: OutlineButton(
-                child: new Text('${this.releaseDate}',
+          ),
+          SizedBox(
+              height: MediaQuery.of(context).size.width > 576
+                  ? MediaQuery.of(context).size.width / 96
+                  : MediaQuery.of(context).size.width / 20),
+          Text(
+            '#${this.houseName}',
+            style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: MediaQuery.of(context).size.width > 576
+                    ? MediaQuery.of(context).size.width / 75
+                    : MediaQuery.of(context).size.width / 20),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Zoom Link: ',
+                  style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width > 576
+                          ? MediaQuery.of(context).size.width / 96
+                          : MediaQuery.of(context).size.width / 24)),
+              InkWell(
+                  child: new Text(
+                    '$zoomLink',
                     style: TextStyle(
                         color: Colors.blue,
-                        fontSize: MediaQuery.of(context).size.width / 120)),
-                onPressed: null,
-                disabledBorderColor: Colors.blue,
-                shape: StadiumBorder(),
-              ),
-            )
-          ]),
-        ),
+                        fontSize: MediaQuery.of(context).size.width > 576
+                            ? MediaQuery.of(context).size.width / 96
+                            : MediaQuery.of(context).size.width / 24),
+                  ),
+                  onTap: () => launch('$zoomLink')),
+            ],
+          ),
+          Text('Zoom Date: $zoomDate',
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width > 576
+                      ? MediaQuery.of(context).size.width / 75
+                      : MediaQuery.of(context).size.width / 20)),
+          SizedBox(
+              height: MediaQuery.of(context).size.width > 576
+                  ? MediaQuery.of(context).size.width / 96
+                  : MediaQuery.of(context).size.width / 32),
+          SizedBox(
+            width: MediaQuery.of(context).size.width > 576
+                ? MediaQuery.of(context).size.width / 14
+                : MediaQuery.of(context).size.width / 5,
+            height: MediaQuery.of(context).size.width > 576
+                ? MediaQuery.of(context).size.width / 40
+                : MediaQuery.of(context).size.width / 16,
+            child: OutlineButton(
+              child: new Text('${this.releaseDate}',
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: MediaQuery.of(context).size.width > 576
+                          ? MediaQuery.of(context).size.width / 120
+                          : MediaQuery.of(context).size.width / 40)),
+              onPressed: null,
+              disabledBorderColor: Colors.blue,
+              shape: StadiumBorder(),
+            ),
+          )
+        ]),
       ),
     );
   }
