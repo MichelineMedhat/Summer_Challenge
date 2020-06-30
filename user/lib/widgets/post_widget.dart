@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+
 import '../models/post.dart';
 
 class PostWidget extends StatelessWidget {
   final Post post;
+
   const PostWidget({Key key, this.post}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,18 +75,21 @@ class PostWidget extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: MediaQuery.of(context).size.width / 72),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 8,
-                    child: Text(
-                      '#${post.hashtag}',
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 5,
-                      style: TextStyle(
-                          fontSize: MediaQuery.of(context).size.width / 72,
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  post.hashtag.isNotEmpty
+                      ? Container(
+                          width: MediaQuery.of(context).size.width / 8,
+                          child: Text(
+                            '#${post.hashtag}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 5,
+                            style: TextStyle(
+                                fontSize:
+                                    MediaQuery.of(context).size.width / 72,
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : Container(),
                 ],
               ),
             ],
