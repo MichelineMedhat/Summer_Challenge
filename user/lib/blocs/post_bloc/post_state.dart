@@ -41,6 +41,7 @@ class PostUploaded extends PostState {
   final Post post;
 
   const PostUploaded({@required this.post});
+
   @override
   List<Object> get props => [post];
 
@@ -49,11 +50,15 @@ class PostUploaded extends PostState {
 }
 
 class PostNotUploaded extends PostState {
+  final String errorMessage;
+
+  PostNotUploaded({this.errorMessage = "Error Uploading Post"});
+
   @override
   String toString() => 'PostNotUploaded';
 }
 
-class FilteringPosts extends PostState{
-   @override
+class FilteringPosts extends PostState {
+  @override
   String toString() => 'FilteringPosts';
 }

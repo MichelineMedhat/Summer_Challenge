@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+
 import 'package:bloc/bloc.dart';
 
 import '../../models/post.dart';
@@ -48,24 +49,27 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   Stream<PostState> _mapAddPostEventToState(
       Post post, Uint8List imageBytes, String extenstion) async* {
     yield PostUploading();
-    try {
-      var path;
-      if (imageBytes != null) {
-        path = await PostRepository.uploadImageFile(
-                imageBytes,
-                post.username +
-                    post.timestamp.seconds.toString() +
-                    post.timestamp.nanoseconds.toString(),
-                extenstion)
-            .then((value) => value.toString());
-      }
-      post.uri = path;
-      await PostRepository.addPost(post);
+    if (post.status.isEmpty) {
+      yield PostNotUploaded(errorMessage: "Status can't be empty!");
+    } else {
+      try {
+        var path;
+        if (imageBytes != null) {
+          path = await PostRepository.uploadImageFile(
+                  imageBytes,
+                  post.username +
+                      post.timestamp.seconds.toString() +
+                      post.timestamp.nanoseconds.toString(),
+                  extenstion)
+              .then((value) => value.toString());
+        }
+        post.uri = path;
+        await PostRepository.addPost(post);
 
-      yield PostUploaded(post: post);
-    } catch (err) {
-      print('err');
-      yield PostNotUploaded();
+        yield PostUploaded(post: post);
+      } catch (err) {
+        yield PostNotUploaded();
+      }
     }
   }
 }
