@@ -30,60 +30,60 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(MediaQuery.of(context).size.width / 32),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: MediaQuery.of(context).size.width / 1.9,
-            height: MediaQuery.of(context).size.height / 18,
-            child: TextField(
-              controller: _filterTextEditController,
-              onSubmitted: (_) => _onFilterSubmitted(),
-              decoration: InputDecoration(
-                hintText: 'Search posts',
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(30.0),
-                  ),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Container(
+          width: MediaQuery.of(context).size.width / 1.9,
+          height: MediaQuery.of(context).size.height / 18,
+          child: TextField(
+            controller: _filterTextEditController,
+            onSubmitted: (_) => _onFilterSubmitted(),
+            decoration: InputDecoration(
+              hintText: 'Search posts',
+              border: new OutlineInputBorder(
+                borderRadius: const BorderRadius.all(
+                  const Radius.circular(30.0),
                 ),
-                prefixIcon: Icon(Icons.search),
               ),
+              prefixIcon: Icon(Icons.search),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 16,
-          ),
-          Container(
-              width: MediaQuery.of(context).size.width > 576
-                  ? MediaQuery.of(context).size.width / 2
-                  : MediaQuery.of(context).size.width,
-              child: BlocBuilder<PostBloc, PostState>(
-                builder: (context, state) {
-                  if (state is AllPostsLoading) {
-                    return Container(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [CircularProgressIndicator()],
-                        ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 16,
+        ),
+        Container(
+            width: MediaQuery.of(context).size.width > 576
+                ? MediaQuery.of(context).size.width / 2
+                : MediaQuery.of(context).size.width,
+            child: BlocBuilder<PostBloc, PostState>(
+              builder: (context, state) {
+                if (state is AllPostsLoading ||
+                    state is PostUploading ||
+                    state is PostUploaded) {
+                  return Container(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [CircularProgressIndicator()],
                       ),
-                    );
-                  } else if (state is AllPostsLoaded) {
-                    return ListView.builder(
-                        itemCount: state.posts.length,
-                        scrollDirection: Axis.vertical,
-                        controller: _scrollController,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return PostWidget(post: state.posts[index]);
-                        });
-                  } else {
-                    return Text('Please Check your internet Connection');
-                  }
-                },
-              )),
-        ]));
+                    ),
+                  );
+                } else if (state is AllPostsLoaded) {
+                  return ListView.builder(
+                      itemCount: state.posts.length,
+                      scrollDirection: Axis.vertical,
+                      controller: _scrollController,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return PostWidget(post: state.posts[index]);
+                      });
+                } else {
+                  return Text('Please Check your internet Connection');
+                }
+              },
+            )),
+      ]),
+    );
   }
 
   void _onFilterSubmitted() {
