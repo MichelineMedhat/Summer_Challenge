@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/post_bloc/bloc.dart';
+import '../blocs/post_bloc/post_bloc.dart';
 import '../models/post.dart';
+import '../models/user.dart';
 import '../screens/home_page.dart';
 import '../screens/houses_page.dart';
 import '../widgets/post_dialog.dart';
-import '../blocs/post_bloc/post_bloc.dart';
-import '../blocs/authentication_bloc/bloc.dart';
-import '../models/user.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
@@ -30,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String extenstion;
   Uint8List data;
   PostBloc postBloc;
+
   @override
   void initState() {
     super.initState();
@@ -68,15 +69,24 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: PageView(
-        controller: HomeScreen.pageController,
-        scrollDirection: Axis.horizontal,
-        physics: NeverScrollableScrollPhysics(),
-        pageSnapping: false,
-        children: [
-          HousesPage(user: widget.user),
-          HomePage(user: widget.user),
-        ],
+      body: BlocListener<PostBloc, PostState>(
+        listener: (context, state) {
+          if (state is PostNotUploaded) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+              content: Text(state.errorMessage),
+              backgroundColor: Colors.red,
+            ));
+          }
+        },
+        child: PageView(
+          controller: HomeScreen.pageController,
+          scrollDirection: Axis.horizontal,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            HousesPage(user: widget.user),
+            HomePage(user: widget.user),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Theme.of(context).bottomAppBarColor,
@@ -102,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 28,
                 ),
                 onPressed: () {
-                  HomeScreen.pageController.animateToPage(2,
+                  HomeScreen.pageController.animateToPage(1,
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeOutBack);
                 },
@@ -136,8 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context) {
           return PostDialog(
             onPressed: () {
-            hashtagEditingController = PostDialog.hashtagEditingController;
-            statusEditingController = PostDialog.statusEditingController;
+              hashtagEditingController = PostDialog.hashtagEditingController;
+              statusEditingController = PostDialog.statusEditingController;
               Post post = Post(
                   status: statusEditingController.text,
                   hashtag: hashtagEditingController.text,
