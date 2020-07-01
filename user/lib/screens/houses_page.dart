@@ -18,6 +18,8 @@ class HousesPage extends StatelessWidget {
       releaseDate: 'Tuesday',
       zoomDate: 'Sunday',
       zoomLink: 'ana zoom link',
+      playlistUri:
+          'PLiWY5uwrAVPuUipwXGjBXIghPJm4YoQCR',
     ));
     houses.add(House(
       houseName: 'illustrator_house',
@@ -25,13 +27,16 @@ class HousesPage extends StatelessWidget {
       releaseDate: 'Tuesday',
       zoomDate: 'Sunday',
       zoomLink: 'ana zoom link',
+      playlistUri:
+          "PLiWY5uwrAVPtrNYnLH20eJymVbloRLchi",
     ));
     houses.add(House(
-      houseName: 'conding_house',
+      houseName: 'coding_house',
       imageName: 'coding.jpg',
       releaseDate: 'Tuesday',
       zoomDate: 'Sunday',
       zoomLink: 'ana zoom link',
+      playlistUri: 'PLiWY5uwrAVPtj6Y82sZmi18hIH2FpwAR6',
     ));
     houses.add(House(
       houseName: 'photographing_house',
@@ -54,11 +59,13 @@ class HousesPage extends StatelessWidget {
           children: List<Widget>.generate(
             houses.length,
             (int index) => House(
-                houseName: houses[index].houseName,
-                imageName: houses[index].imageName,
-                releaseDate: houses[index].releaseDate,
-                zoomDate: houses[index].zoomDate,
-                zoomLink: houses[index].zoomLink),
+              houseName: houses[index].houseName,
+              imageName: houses[index].imageName,
+              releaseDate: houses[index].releaseDate,
+              zoomDate: houses[index].zoomDate,
+              zoomLink: houses[index].zoomLink,
+              playlistUri: houses[index].playlistUri,
+            ),
           )),
     );
   }

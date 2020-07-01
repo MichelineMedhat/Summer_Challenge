@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class House extends StatelessWidget {
+  final String playlistUri;
   final String houseName;
   final String zoomLink;
   final String zoomDate;
@@ -9,7 +10,8 @@ class House extends StatelessWidget {
   final String imageName;
 
   House(
-      {this.houseName,
+      {this.playlistUri,
+      this.houseName,
       this.zoomLink,
       this.zoomDate,
       this.imageName,
@@ -19,7 +21,7 @@ class House extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.transparent,
-      onTap: () {},
+      onTap: () => playlistUri != null?  launch('https://www.youtube.com/playlist?list=$playlistUri'): null,
       child: Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
