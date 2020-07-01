@@ -29,26 +29,22 @@ class PostWidget extends StatelessWidget {
         children: [
           Container(
             child: post.uri != null
-                ? Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 3.5,
-                    child: Image.network(
-                      post.uri,
-                      fit: BoxFit.contain,
-                      cacheWidth: 512,
-                    ),
+                ? Image.network(
+                    post.uri,
+                    fit: BoxFit.contain,
+                    cacheWidth: 512,
                   )
                 : Container(),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 32,
+            height: 20,
           ),
           Text(
             post.status,
-            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 64),
+            style: TextStyle(fontSize: 14),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 32,
+            height: 20,
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,20 +67,17 @@ class PostWidget extends StatelessWidget {
                   Text(
                     '@${post.username}',
                     style: TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.width / 72),
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   post.hashtag.isNotEmpty
                       ? Container(
-                          width: MediaQuery.of(context).size.width / 8,
                           child: Text(
                             '#${post.hashtag}',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
                             style: TextStyle(
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 72,
                                 color: Colors.blueAccent,
                                 fontWeight: FontWeight.bold),
                           ),
