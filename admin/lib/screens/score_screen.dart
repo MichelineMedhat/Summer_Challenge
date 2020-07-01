@@ -6,16 +6,16 @@ import '../blocs/post_bloc/post_bloc.dart';
 import '../models/user.dart';
 import '../widgets/post_widget.dart';
 
-class HomePage extends StatefulWidget {
+class ScoreScreen extends StatefulWidget {
   final User user;
 
-  const HomePage({Key key, this.user}) : super(key: key);
+  const ScoreScreen({Key key, this.user}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HomePageState();
+  State<StatefulWidget> createState() => _ScoreScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ScoreScreenState extends State<ScoreScreen> {
   TextEditingController _filterTextEditController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   PostBloc postBloc;
@@ -33,6 +33,7 @@ class _HomePageState extends State<HomePage> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          
           mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(height: 16),
           Container(
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
                         controller: _scrollController,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          return PostWidget(post: state.posts[index]);
+                          return PostWidget(post: state.posts[index],);
                         });
                   } else {
                     return Text('Please Check your internet Connection');

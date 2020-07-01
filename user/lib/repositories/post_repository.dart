@@ -38,9 +38,12 @@ class PostRepository {
     return imageUri;
   }
 
-  static Future<void> addPost(Post post) async {
-    DocumentReference ref = await _db.collection('posts').add(post.toMap());
-    print('document id: ${ref.documentID}');
+  static Future<void> addPost(Post post) async { 
+    DocumentReference ref = _db.collection('posts').document();
+    post.id = ref.documentID;
+    post.graded = '0';
+    ref.setData(post.toMap());
+
   }
 
   static Stream<List<Post>> getUsersFilter(String username)  {
@@ -48,7 +51,6 @@ class PostRepository {
       return snapshot.documents
           .map((doc) => Post.fromDocument(doc))
           .where((element) => element.username == username).toList();
-
     });
   }
 

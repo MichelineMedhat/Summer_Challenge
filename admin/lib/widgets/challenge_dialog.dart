@@ -40,7 +40,7 @@ class _ChallengeDialogState extends State<ChallengeDialog> {
               minLines: 1,
               maxLines: 7,
             ),
-            TextField(
+            TextFormField(
               controller: ChallengeDialog.hashtagEditingController,
               decoration: InputDecoration(
                 prefixText: '#',

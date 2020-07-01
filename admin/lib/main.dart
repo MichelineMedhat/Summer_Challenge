@@ -1,13 +1,14 @@
 import 'package:admin/blocs/challenge_bloc/bloc.dart';
+import 'package:admin/blocs/post_bloc/post_bloc.dart';
 import 'package:admin/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(MultiBlocProvider(providers: [
-    /*BlocProvider<PostBloc>(
+    BlocProvider<PostBloc>(
       create: (BuildContext context) => PostBloc(),
-    ),*/
+    ),
         BlocProvider<ChallengeBloc>(
       create: (BuildContext context) => ChallengeBloc(),
     )
