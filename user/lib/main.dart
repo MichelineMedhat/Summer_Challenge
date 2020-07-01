@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summer_challenge/blocs/score_bloc/bloc.dart';
 
-import 'blocs/app_bloc_delegate.dart';
 import 'blocs/authentication_bloc/bloc.dart';
 import 'blocs/post_bloc/post_bloc.dart';
 import 'repositories/user_repository.dart';
@@ -20,6 +20,9 @@ void main() {
     ),
     BlocProvider<PostBloc>(
       create: (BuildContext context) => PostBloc(),
+    ),
+    BlocProvider<ScoreBloc>(
+      create: (BuildContext context) => ScoreBloc(),
     )
   ], child: App(userRepository: userRepository)));
 }

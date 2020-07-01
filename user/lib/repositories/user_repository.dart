@@ -53,4 +53,14 @@ class UserRepository {
     return imageUri;
 }
 
+  static Stream<List<User>> getScores() {
+    return _db
+        .collection('users')
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.documents.map((doc) => User.fromDocument(doc)).toList()
+        ..sort((a, b) => b.score.compareTo(a.score));
+    });
+  }
+
 }

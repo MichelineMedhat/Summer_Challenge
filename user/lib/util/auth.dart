@@ -48,6 +48,7 @@ class Auth {
   }
 
   Future<void> signUp(User user) async {
+    user.score = 0.0;
     await _getDocRef(user.username).setData(user.toMap());
     await _setPrefs(user.username, user.password);
     _user = user;
