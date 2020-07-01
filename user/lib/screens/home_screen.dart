@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summer_challenge/screens/challenges_page.dart';
 import 'package:summer_challenge/screens/scores_page.dart';
 
 import '../blocs/authentication_bloc/bloc.dart';
@@ -86,7 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             HousesPage(user: widget.user),
             HomePage(user: widget.user),
-            ScoresPage()
+            ScoresPage(),
+            ChallengesPage()
           ],
         ),
       ),
@@ -105,7 +107,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Theme.of(context).iconTheme.color,
                   size: 28,
                 ),
-                onPressed: () {},
+                onPressed: () {HomeScreen.pageController.animateToPage(3,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeOutBack);},
               ),
               IconButton(
                 icon: Icon(
