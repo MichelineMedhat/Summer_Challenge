@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 
 import '../../repositories/challenge_repository.dart';
@@ -12,7 +13,7 @@ class ChallengeBloc extends Bloc<ChallengeEvent, ChallengeState> {
 
   @override
   Stream<ChallengeState> mapEventToState(ChallengeEvent event) async* {
-   if (event is Loadchallenges) {
+    if (event is Loadchallenges) {
       yield* _mapLoadChallengesToState();
     } else if (event is Updatechallenges) {
       yield AllchallengesLoaded(challenges: event.challenges);
@@ -20,9 +21,9 @@ class ChallengeBloc extends Bloc<ChallengeEvent, ChallengeState> {
   }
 
   Stream<ChallengeState> _mapLoadChallengesToState() async* {
+    yield AllChallengesLoading();
     _postSubscription?.cancel();
     _postSubscription = ChallengeRepository.getAllChallenges()
         .listen((challenge) => add(Updatechallenges(challenges: challenge)));
   }
-
 }
