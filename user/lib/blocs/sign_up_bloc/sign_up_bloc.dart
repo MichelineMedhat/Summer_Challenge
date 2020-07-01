@@ -67,7 +67,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
     Stream<SignUpState> _mapSecretKeyChangedToState(String secretKey) async* {
     yield state.update(
-      isSecretKeyValid: secretKey ==  SecretKey.secretKey,
+      isSecretKeyValid: secretKey ==  SecretKeys.secretKey,
     );
   }
 

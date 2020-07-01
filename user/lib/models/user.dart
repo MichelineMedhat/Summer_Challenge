@@ -5,20 +5,22 @@ class User {
   String username;
   String password;
   String profilePicture;
+  double score;
 
-  User({
-    this.phoneNumber,
-    this.username,
-    this.password,
-    this.profilePicture,
-  });
+  User(
+      {this.phoneNumber,
+      this.username,
+      this.password,
+      this.profilePicture,
+      this.score});
 
   factory User.fromDocument(DocumentSnapshot doc) {
     return User(
       phoneNumber: doc['phoneNumber'],
       username: doc['username'],
       password: doc['password'],
-      profilePicture: doc['profilePicture']
+      profilePicture: doc['profilePicture'],
+      score: doc['score'].toDouble(),
     );
   }
 
@@ -27,7 +29,8 @@ class User {
       'phoneNumber': phoneNumber,
       'username': username,
       'password': password,
-      'profilePicture':profilePicture,
+      'profilePicture': profilePicture,
+      'score': score
     };
   }
 
@@ -38,6 +41,7 @@ class User {
       username: $username,
       password: $password,
       profilePicture: $profilePicture,
+      score: $score,
     }''';
   }
 }

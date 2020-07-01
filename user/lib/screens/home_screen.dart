@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summer_challenge/screens/scores_page.dart';
 
 import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/post_bloc/bloc.dart';
@@ -85,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             HousesPage(user: widget.user),
             HomePage(user: widget.user),
+            ScoresPage()
           ],
         ),
       ),
@@ -112,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 28,
                 ),
                 onPressed: () {
-                  HomeScreen.pageController.animateToPage(1,
+                  HomeScreen.pageController.animateToPage(2,
                       duration: Duration(milliseconds: 300),
                       curve: Curves.easeOutBack);
                 },
