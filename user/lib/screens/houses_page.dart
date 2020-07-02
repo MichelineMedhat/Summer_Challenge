@@ -15,13 +15,13 @@ class HousesPage extends StatelessWidget {
     houses.add(House(
       houseName: 'photoshop_house',
       imageName: 'photoshop.jpg',
-      releaseDate: 'Tuesday',
-      zoomDate: 'Sunday',
+      releaseDate: 'Friday',
+      zoomDate: 'Saturday 8:00pm',
       playlistUri: 'PLiWY5uwrAVPuUipwXGjBXIghPJm4YoQCR',
       zoomLink:
-          'https://us04web.zoom.us/j/8171925844?pwd=NlB5ZUI1Qk9JLzlLRk1DQk1mUDFXdz09',
-      roomId: '8171925844',
-      roomPassword: '032741',
+          ' https://us04web.zoom.us/j/7676067674?pwd=QUNRb2tIV0xWQ0lEMVIrVy81c09XZz09',
+      roomId: '7676067674',
+      roomPassword: '940103',
     ));
     houses.add(House(
       houseName: 'illustrator_house',
