@@ -45,16 +45,24 @@ class _PostDialogState extends State<PostDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.black87,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(16.0))),
       title: ListTile(
         title: Text(
           'Add Post',
-          style: TextStyle(fontSize: MediaQuery.of(context).size.width / 64, color: Colors.grey),
+          style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width > 576
+                  ? MediaQuery.of(context).size.width / 64
+                  : MediaQuery.of(context).size.width / 20,
+              color: Colors.white),
         ),
         leading: Icon(
           Icons.center_focus_weak,
-          size: MediaQuery.of(context).size.width / 40,
+          size: MediaQuery.of(context).size.width > 576
+              ? MediaQuery.of(context).size.width / 40
+              : MediaQuery.of(context).size.width / 10,
+          color: Colors.white,
         ),
       ),
       content: Container(
@@ -63,16 +71,50 @@ class _PostDialogState extends State<PostDialog> {
           child: ListBody(
             children: <Widget>[
               TextField(
-                controller: PostDialog.statusEditingController,
-                keyboardType: TextInputType.multiline,
-                minLines: 1,
-                maxLines: 7,
-                decoration: InputDecoration(hintText: 'Your post here ...', hintStyle: TextStyle(fontSize: MediaQuery.of(context).size.width / 90)),
-              ),
+                  style: TextStyle(color: Colors.white),
+                  controller: PostDialog.statusEditingController,
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 7,
+                  decoration: InputDecoration(
+                    hintText: 'Your post here ...',
+                    hintStyle: TextStyle(
+                      color: Colors.white54,
+                      fontSize: MediaQuery.of(context).size.width > 576
+                          ? MediaQuery.of(context).size.width / 90
+                          : MediaQuery.of(context).size.width / 25,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange),
+                    ),
+                    border: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  )),
               TextField(
+                style: TextStyle(color: Colors.white),
                 controller: PostDialog.hashtagEditingController,
-                decoration:
-                    InputDecoration(prefixText: '#', hintText: 'hashtag', hintStyle: TextStyle(fontSize: MediaQuery.of(context).size.width / 90)),
+                decoration: InputDecoration(
+                  prefixText: '#',
+                  hintText: 'hashtag',
+                  hintStyle: TextStyle(
+                      color: Colors.white54,
+                      fontSize: MediaQuery.of(context).size.width > 576
+                          ? MediaQuery.of(context).size.width / 90
+                          : MediaQuery.of(context).size.width / 25),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
+                  border: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.orange),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                  ),
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 16,
@@ -86,7 +128,9 @@ class _PostDialogState extends State<PostDialog> {
                     switchInCurve: Curves.easeIn,
                     child: CircleAvatar(
                             backgroundColor: Colors.transparent,
-                            radius: MediaQuery.of(context).size.width / 16,
+                            radius: MediaQuery.of(context).size.width > 576
+                                ? MediaQuery.of(context).size.width / 16
+                                : MediaQuery.of(context).size.width / 5,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(
                                     MediaQuery.of(context).size.width / 16),
@@ -96,7 +140,9 @@ class _PostDialogState extends State<PostDialog> {
                   IconButton(
                     icon: Icon(
                       Icons.camera_alt,
-                      size: MediaQuery.of(context).size.width / 60,
+                      size: MediaQuery.of(context).size.width > 576
+                          ? MediaQuery.of(context).size.width / 60
+                          : MediaQuery.of(context).size.width / 15,
                       color: Colors.grey,
                     ),
                     onPressed: () => pickImage(),
@@ -111,8 +157,10 @@ class _PostDialogState extends State<PostDialog> {
         FlatButton(
           child: Text('Post Yala',
               style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width / 72,
-                color: Colors.blue,
+                fontSize: MediaQuery.of(context).size.width > 576
+                    ? MediaQuery.of(context).size.width / 72
+                    : MediaQuery.of(context).size.width / 20,
+                color: Colors.orange,
               )),
           onPressed: widget.onPressed,
         ),

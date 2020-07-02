@@ -25,6 +25,7 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Create an Account'),
+        backgroundColor: Colors.orange,
       ),
       body: Center(
         child: BlocProvider<SignUpBloc>(
@@ -128,6 +129,7 @@ class _SignUpFormState extends State<SignUpForm> {
       child: BlocBuilder<SignUpBloc, SignUpState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Colors.black87,
             body: Center(
               child: Container(
                 width: 700,
@@ -158,6 +160,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               child: IconButton(
                                 icon: Icon(
                                   Icons.camera_alt,
+                                  color: Colors.white,
                                   size: 30.0,
                                 ),
                                 onPressed: () => pickImage(),

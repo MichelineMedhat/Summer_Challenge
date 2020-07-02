@@ -19,43 +19,49 @@ class _ChallengesPageState extends State<ChallengesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Challenges", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+    return Scaffold(
+      backgroundColor: Colors.black87,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Center(
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("Challenges",
+                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white)),
+              ),
+              Container(
+                  width: 400,
+                  child: BlocBuilder<ChallengeBloc, ChallengeState>(
+                    builder: (context, state) {
+                      if (state is AllChallengesLoading) {
+                        return Container(
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [CircularProgressIndicator()],
+                            ),
+                          ),
+                        );
+                      } else if (state is AllchallengesLoaded) {
+                        return ListView.builder(
+                            itemCount: state.challenges.length,
+                            scrollDirection: Axis.vertical,
+                            controller: _scrollController,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return ChallengeCard(
+                                  challenge: state.challenges[index]);
+                            });
+                      } else {
+                        return Text('Please Check your internet Connection');
+                      }
+                    },
+                  )),
+            ]),
           ),
-          Container(
-              width: 400,
-              child: BlocBuilder<ChallengeBloc, ChallengeState>(
-                builder: (context, state) {
-                  if (state is AllChallengesLoading) {
-                    return Container(
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [CircularProgressIndicator()],
-                        ),
-                      ),
-                    );
-                  } else if (state is AllchallengesLoaded) {
-                    return ListView.builder(
-                        itemCount: state.challenges.length,
-                        scrollDirection: Axis.vertical,
-                        controller: _scrollController,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ChallengeCard(
-                              challenge: state.challenges[index]);
-                        });
-                  } else {
-                    return Text('Please Check your internet Connection');
-                  }
-                },
-              )),
-        ]),
+        ),
       ),
     );
   }

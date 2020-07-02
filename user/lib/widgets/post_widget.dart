@@ -14,7 +14,7 @@ class PostWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).cardColor,
+        color: Color(0xff2B2A28),
         boxShadow: [
           BoxShadow(
             offset: Offset(1.2, 2.4),
@@ -41,7 +41,7 @@ class PostWidget extends StatelessWidget {
           ),
           Text(
             post.status,
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 14, color: Colors.white),
           ),
           SizedBox(
             height: 20,
@@ -78,7 +78,7 @@ class PostWidget extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 5,
                             style: TextStyle(
-                                color: Colors.blueAccent,
+                                color: Colors.orange,
                                 fontWeight: FontWeight.bold),
                           ),
                         )

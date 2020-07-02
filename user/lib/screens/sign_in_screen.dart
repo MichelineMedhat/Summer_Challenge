@@ -104,6 +104,7 @@ class _SignInState extends State<SignInForm> {
       child: BlocBuilder<SignInBloc, SignInState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: Colors.black87,
             body: Center(
               child: Container(
                 width: 700,
@@ -116,7 +117,7 @@ class _SignInState extends State<SignInForm> {
                         CircleAvatar(
                           child: Image.asset('assets/logo.png'),
                           backgroundColor: Colors.transparent,
-                          radius: 100,
+                          radius: 150,
                         ),
                         SizedBox(height: 48.0),
                         OutlinedTextField(
@@ -148,7 +149,7 @@ class _SignInState extends State<SignInForm> {
                         ),
                         SizedBox(height: 18.0),
                         InkWell(
-                          child: new Text('Create an account!!', style: TextStyle(color: Colors.red)),
+                          child: new Text('Let\'s Create an Account :)', style: TextStyle(color: Colors.orange)),
                           hoverColor: Colors.transparent,
                           highlightColor: Colors.transparent,
                            onTap: () => Navigator.push(

@@ -44,6 +44,11 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        errorColor: Colors.orange,
+        cardColor: Color(0xff2B2A28),
+        backgroundColor: Colors.black87
+      ),
       title: 'Summer Challenge',
       debugShowCheckedModeBanner: false,
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(

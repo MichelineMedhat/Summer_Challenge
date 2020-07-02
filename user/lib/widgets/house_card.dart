@@ -8,6 +8,8 @@ class House extends StatelessWidget {
   final String zoomDate;
   final String releaseDate;
   final String imageName;
+  final String roomId;
+  final String roomPassword;
 
   House(
       {this.playlistUri,
@@ -15,13 +17,17 @@ class House extends StatelessWidget {
       this.zoomLink,
       this.zoomDate,
       this.imageName,
-      this.releaseDate});
+      this.releaseDate,
+      this.roomId,
+      this.roomPassword});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.transparent,
-      onTap: () => playlistUri != null?  launch('https://www.youtube.com/playlist?list=$playlistUri'): null,
+      onTap: () => playlistUri != null
+          ? launch('https://www.youtube.com/playlist?list=$playlistUri')
+          : null,
       child: Container(
         margin: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -65,7 +71,7 @@ class House extends StatelessWidget {
                           : MediaQuery.of(context).size.width / 24)),
               InkWell(
                   child: new Text(
-                    '$zoomLink',
+                    'Press me',
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: MediaQuery.of(context).size.width > 576
@@ -80,6 +86,17 @@ class House extends StatelessWidget {
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
                       : MediaQuery.of(context).size.width / 20)),
+            
+  Text('Room ID: $roomId',
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width > 576
+                      ? MediaQuery.of(context).size.width / 75
+                      : MediaQuery.of(context).size.width / 20)),
+  Text('Room Password: $roomPassword',
+              style: TextStyle(
+                  fontSize: MediaQuery.of(context).size.width > 576
+                      ? MediaQuery.of(context).size.width / 75
+                      : MediaQuery.of(context).size.width / 20)),
           SizedBox(
               height: MediaQuery.of(context).size.width > 576
                   ? MediaQuery.of(context).size.width / 96
@@ -87,7 +104,7 @@ class House extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width > 576
                 ? MediaQuery.of(context).size.width / 14
-                : MediaQuery.of(context).size.width / 5,
+                : MediaQuery.of(context).size.width / 3,
             height: MediaQuery.of(context).size.width > 576
                 ? MediaQuery.of(context).size.width / 40
                 : MediaQuery.of(context).size.width / 16,

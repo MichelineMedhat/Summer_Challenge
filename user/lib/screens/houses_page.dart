@@ -17,56 +17,71 @@ class HousesPage extends StatelessWidget {
       imageName: 'photoshop.jpg',
       releaseDate: 'Tuesday',
       zoomDate: 'Sunday',
-      zoomLink: 'ana zoom link',
-      playlistUri:
-          'PLiWY5uwrAVPuUipwXGjBXIghPJm4YoQCR',
+      playlistUri: 'PLiWY5uwrAVPuUipwXGjBXIghPJm4YoQCR',
+      zoomLink:
+          'https://us04web.zoom.us/j/8171925844?pwd=NlB5ZUI1Qk9JLzlLRk1DQk1mUDFXdz09',
+      roomId: '8171925844',
+      roomPassword: '032741',
     ));
     houses.add(House(
       houseName: 'illustrator_house',
       imageName: 'illustrator.jpg',
-      releaseDate: 'Tuesday',
-      zoomDate: 'Sunday',
-      zoomLink: 'ana zoom link',
-      playlistUri:
-          "PLiWY5uwrAVPtrNYnLH20eJymVbloRLchi",
+      releaseDate: 'Thursday',
+      zoomDate: 'Friday 7:00pm',
+      playlistUri: "PLiWY5uwrAVPtrNYnLH20eJymVbloRLchi",
+      zoomLink:'https://us04web.zoom.us/j/2132008045?pwd=Y0MvQllTa0krNjBpUXpha3Z1OSs3UT09',
+      roomId: '2132008045',
+      roomPassword: '2kPpdZ',
     ));
     houses.add(House(
       houseName: 'coding_house',
       imageName: 'coding.jpg',
-      releaseDate: 'Tuesday',
-      zoomDate: 'Sunday',
-      zoomLink: 'ana zoom link',
+      releaseDate: 'Thursday',
+      zoomDate: 'Monday 9:00pm',
+      zoomLink:
+          'https://us04web.zoom.us/j/8171925844?pwd=NlB5ZUI1Qk9JLzlLRk1DQk1mUDFXdz09',
       playlistUri: 'PLiWY5uwrAVPtj6Y82sZmi18hIH2FpwAR6',
+      roomId: '8171925844',
+      roomPassword: '032741',
     ));
     houses.add(House(
       houseName: 'photographing_house',
       imageName: 'photographing.jpeg',
-      releaseDate: 'Tuesday',
-      zoomDate: 'Sunday',
-      zoomLink: 'ana zoom link',
+      releaseDate: 'No Youtube',
+      zoomDate: 'Tuesday 9:00pm',
+      zoomLink:
+          'https://us04web.zoom.us/j/8171925844?pwd=NlB5ZUI1Qk9JLzlLRk1DQk1mUDFXdz09',
+      roomId: '8171925844',
+      roomPassword: '032741',
     ));
-    return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width > 576
-              ? MediaQuery.of(context).size.width / 4
-              : MediaQuery.of(context).size.width / 8,
-          vertical: 16),
-      child: GridView.count(
-          crossAxisCount: MediaQuery.of(context).size.width > 576 ? 2 : 1,
-          padding: const EdgeInsets.all(4.0),
-          mainAxisSpacing: 4.0,
-          crossAxisSpacing: 4.0,
-          children: List<Widget>.generate(
-            houses.length,
-            (int index) => House(
-              houseName: houses[index].houseName,
-              imageName: houses[index].imageName,
-              releaseDate: houses[index].releaseDate,
-              zoomDate: houses[index].zoomDate,
-              zoomLink: houses[index].zoomLink,
-              playlistUri: houses[index].playlistUri,
-            ),
-          )),
+    return Scaffold(
+      backgroundColor: Colors.black87,
+          body: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: MediaQuery.of(context).size.width > 576
+                ? MediaQuery.of(context).size.width / 4
+                : MediaQuery.of(context).size.width / 8,
+            vertical: 16),
+        child: GridView.count(
+          childAspectRatio:MediaQuery.of(context).size.width > 567?0.9 : 0.8,
+            crossAxisCount: MediaQuery.of(context).size.width > 576 ? 2 : 1,
+            padding: const EdgeInsets.all(4.0),
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
+            children: List<Widget>.generate(
+              houses.length,
+              (int index) => House(
+                houseName: houses[index].houseName,
+                imageName: houses[index].imageName,
+                releaseDate: houses[index].releaseDate,
+                zoomDate: houses[index].zoomDate,
+                zoomLink: houses[index].zoomLink,
+                playlistUri: houses[index].playlistUri,
+                roomId: houses[index].roomId,
+                roomPassword: houses[index].roomPassword,
+              ),
+            )),
+      ),
     );
   }
 }

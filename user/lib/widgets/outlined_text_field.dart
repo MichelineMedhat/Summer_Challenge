@@ -33,6 +33,7 @@ class OutlinedTextField extends StatelessWidget {
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.normal,
+        color: Colors.white
       ),
       decoration: InputDecoration(
           contentPadding:
@@ -41,11 +42,13 @@ class OutlinedTextField extends StatelessWidget {
           suffixText: suffixText,
           prefixStyle: TextStyle(
             fontSize: 16,
+            color: Colors.white,
             fontWeight: FontWeight.normal,
           ),
           border: OutlineInputBorder(borderSide: BorderSide()),
           labelText: textKey,
           labelStyle: TextStyle(
+            color: Colors.white70,
             fontWeight: FontWeight.normal,
             fontSize: 16,
           ),
@@ -59,20 +62,20 @@ class OutlinedTextField extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-                color: Theme.of(context).highlightColor,
+                color:  Theme.of(context).primaryColor,
                 width: 2.5,
                 style: BorderStyle.solid),
           ),
           focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(
-                color: Theme.of(context).errorColor,
+                color: Colors.orange,
                 width: 2.5,
               )),
           errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               borderSide: BorderSide(
-                color: Theme.of(context).errorColor,
+                color: Colors.orange,
                 width: 2.5,
               ))),
     );

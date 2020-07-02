@@ -23,20 +23,30 @@ class ChallengeCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             challenge.title,
+            style: TextStyle( fontWeight: FontWeight.bold, color: Colors.white),
+            textAlign: TextAlign.start,
+          ),
+          Divider(
+            color: Colors.grey,
+            thickness: 0.2,
           ),
           SizedBox(
             height: 20,
           ),
           Text(
             challenge.body,
+            style: TextStyle(color:Colors.white),
           ),
           SizedBox(
             height: 20,
+          ),
+           Divider(
+            color: Colors.grey,
+            thickness: 0.2,
           ),
           challenge.hashtag.isNotEmpty
               ? Container(
@@ -45,7 +55,7 @@ class ChallengeCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 5,
                     style: TextStyle(
-                        color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                        color: Colors.orange, fontWeight: FontWeight.bold),
                   ),
                 )
               : Container()

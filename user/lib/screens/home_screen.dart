@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../screens/challenges_page.dart';
 import '../screens/scores_page.dart';
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.orange,
         leading: IconButton(
           icon: Icon(Icons.exit_to_app),
           onPressed: () {
@@ -57,16 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.account_circle),
             onPressed: () {
               HomeScreen.pageController.animateToPage(1,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeOutBack);
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.fastOutSlowIn);
             },
           ),
           IconButton(
             icon: Icon(Icons.home),
             onPressed: () {
               HomeScreen.pageController.animateToPage(0,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeOutBack);
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.fastOutSlowIn);
             },
           )
         ],
@@ -93,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Theme.of(context).bottomAppBarColor,
+        color: Colors.black87,
         shape: CircularNotchedRectangle(),
         child: Padding(
           padding: EdgeInsets.all(8),
@@ -102,25 +104,19 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Theme.of(context).iconTheme.color,
-                  size: 28,
-                ),
-                onPressed: () {HomeScreen.pageController.animateToPage(3,
-                    duration: Duration(milliseconds: 300),
-                    curve: Curves.easeOutBack);},
+                icon: FaIcon(FontAwesomeIcons.dumbbell, color: Colors.orange,),
+                onPressed: () {
+                  HomeScreen.pageController.animateToPage(3,
+                      duration: Duration(milliseconds: 400),
+                      curve: Curves.fastOutSlowIn);
+                },
               ),
               IconButton(
-                icon: Icon(
-                  Icons.open_in_new,
-                  color: Theme.of(context).iconTheme.color,
-                  size: 28,
-                ),
+                icon: FaIcon(FontAwesomeIcons.trophy, color: Colors.orange,),
                 onPressed: () {
                   HomeScreen.pageController.animateToPage(2,
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.easeOutBack);
+                      duration: Duration(milliseconds: 400),
+                      curve: Curves.fastOutSlowIn);
                 },
               ),
             ],
@@ -128,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Colors.orange,
         child: Icon(
           Icons.add,
           color: Theme.of(context).primaryIconTheme.color,
