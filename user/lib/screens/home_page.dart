@@ -32,10 +32,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 9),
+        preferredSize: Size.fromHeight(MediaQuery.of(context).size.height / 8),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          automaticallyImplyLeading: false,
           flexibleSpace: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -110,14 +111,42 @@ class _HomePageState extends State<HomePage> {
                           ),
                         );
                       } else if (state is AllPostsLoaded) {
-                        return ListView.builder(
-                            itemCount: state.posts.length,
-                            scrollDirection: Axis.vertical,
-                            controller: _scrollController,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return PostWidget(post: state.posts[index]);
-                            });
+                        if (state.posts.isEmpty) {
+                          return Center(
+                              child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Image.asset(
+                                  "assets/face-shield-girl.png",
+                                  width: MediaQuery.of(context).size.width > 576
+                                      ? MediaQuery.of(context).size.width / 10
+                                      : MediaQuery.of(context).size.width / 6,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(width: 24),
+                              Expanded(
+                                child: Text(
+                                  "No posts yet, Be the first to post!",
+                                  style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 32,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ));
+                        } else {
+                          return ListView.builder(
+                              itemCount: state.posts.length,
+                              scrollDirection: Axis.vertical,
+                              controller: _scrollController,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return PostWidget(post: state.posts[index]);
+                              });
+                        }
                       } else {
                         return Text('Please Check your internet Connection');
                       }

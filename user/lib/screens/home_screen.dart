@@ -6,15 +6,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../screens/challenges_page.dart';
-import '../screens/scores_page.dart';
 import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/post_bloc/bloc.dart';
 import '../blocs/post_bloc/post_bloc.dart';
 import '../models/post.dart';
 import '../models/user.dart';
+import '../screens/challenges_page.dart';
 import '../screens/home_page.dart';
 import '../screens/houses_page.dart';
+import '../screens/scores_page.dart';
 import '../widgets/post_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        notchMargin: -12,
         color: Colors.black87,
         shape: CircularNotchedRectangle(),
         child: Padding(
@@ -104,7 +105,10 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               IconButton(
-                icon: FaIcon(FontAwesomeIcons.dumbbell, color: Colors.orange,),
+                icon: FaIcon(
+                  FontAwesomeIcons.dumbbell,
+                  color: Colors.orange,
+                ),
                 onPressed: () {
                   HomeScreen.pageController.animateToPage(3,
                       duration: Duration(milliseconds: 400),
@@ -112,7 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               IconButton(
-                icon: FaIcon(FontAwesomeIcons.trophy, color: Colors.orange,),
+                icon: FaIcon(
+                  FontAwesomeIcons.trophy,
+                  color: Colors.orange,
+                ),
                 onPressed: () {
                   HomeScreen.pageController.animateToPage(2,
                       duration: Duration(milliseconds: 400),
