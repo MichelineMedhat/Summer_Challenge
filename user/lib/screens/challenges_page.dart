@@ -25,11 +25,15 @@ class _ChallengesPageState extends State<ChallengesPage> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Challenges",
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold, color: Colors.white)),
+                    style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white)),
               ),
               Container(
                   width: 400,
@@ -45,15 +49,43 @@ class _ChallengesPageState extends State<ChallengesPage> {
                           ),
                         );
                       } else if (state is AllchallengesLoaded) {
-                        return ListView.builder(
-                            itemCount: state.challenges.length,
-                            scrollDirection: Axis.vertical,
-                            controller: _scrollController,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return ChallengeCard(
-                                  challenge: state.challenges[index]);
-                            });
+                        if (state.challenges.isEmpty) {
+                          return Center(
+                              child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: Image.asset(
+                                  "assets/face-shield-girl.png",
+                                  width: MediaQuery.of(context).size.width > 576
+                                      ? MediaQuery.of(context).size.width / 10
+                                      : MediaQuery.of(context).size.width / 6,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(width: 24),
+                              Expanded(
+                                child: Text(
+                                  "No Challenges yet!",
+                                  style: TextStyle(
+                                    color: Colors.orange,
+                                    fontSize: 32,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ));
+                        } else {
+                          return ListView.builder(
+                              itemCount: state.challenges.length,
+                              scrollDirection: Axis.vertical,
+                              controller: _scrollController,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return ChallengeCard(
+                                    challenge: state.challenges[index]);
+                              });
+                        }
                       } else {
                         return Text('Please Check your internet Connection');
                       }
