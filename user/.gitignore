@@ -34,6 +34,7 @@ lib/util/secretKey.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
+web/secretKey.js
 
 # Symbolication related
 app.*.symbols

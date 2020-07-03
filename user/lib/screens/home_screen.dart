@@ -95,7 +95,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        notchMargin: -12,
         color: Colors.black87,
         shape: CircularNotchedRectangle(),
         child: Padding(

@@ -86,7 +86,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   Stream<SignUpState> _mapFormSubmittedToState(User user, Uint8List imageData, String extenstion) async* {
     yield SignUpState.loading();
     try {
-       user.profilePicture = 'https://firebasestorage.googleapis.com/v0/b/summer2020-628a8.appspot.com/o/images%2Fbasicprofilepicture.png?alt=media&token=7742bc1e-5e5f-4619-ab6f-5525be11f345';
+       user.profilePicture = 'https://firebasestorage.googleapis.com/v0/b/summercorona2020.appspot.com/o/images%2Fbasicprofilepicture.png?alt=media&token=015ba0ed-7c67-4358-a047-5cbe330de8e8';
       if(imageData != null){
       var path = await _userRepository.uploadImageFile(imageData, user.username, extenstion).then((value) => value.toString());
       user.profilePicture = path;

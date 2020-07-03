@@ -37,18 +37,10 @@
     <script src="https://www.gstatic.com/firebasejs/7.9.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-storage.js"></script>>
     <script src="main.dart.js" type="application/javascript"></script>
+    <script src="secretKey.js" type="application/javascript"></script>
 
     <script>
-        var firebaseConfig = {
-            apiKey: "AIzaSyCtLx2ZIJ0xmaPEPvsgGO1HMnwDDUU7Hl4",
-            authDomain: "summer2020-628a8.firebaseapp.com",
-            databaseURL: "https://summer2020-628a8.firebaseio.com",
-            projectId: "summer2020-628a8",
-            storageBucket: "summer2020-628a8.appspot.com",
-            messagingSenderId: "228370527764",
-            appId: "1:228370527764:web:1c571ae6fb6d3269989901"
-        };
-
+        var firebaseConfig = get_config('deploy');
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
