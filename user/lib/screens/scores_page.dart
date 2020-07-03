@@ -61,7 +61,7 @@ class _ScorePageState extends State<StatefulWidget> {
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).cardColor,
+                                  color: Colors.orange,
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: ListTile(
@@ -82,7 +82,7 @@ class _ScorePageState extends State<StatefulWidget> {
                                   ),
                                   trailing: FaIcon(
                                     FontAwesomeIcons.trophy,
-                                    color: Colors.orange,
+                                    color: Colors.white
                                   ),
                                 ),
                               ),
