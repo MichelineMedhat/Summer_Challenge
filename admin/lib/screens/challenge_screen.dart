@@ -13,15 +13,14 @@ class ChallengeScreen extends StatefulWidget {
 
 class _ChallengeScreenState extends State<ChallengeScreen> {
   ChallengeBloc challengeBloc;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     challengeBloc = BlocProvider.of<ChallengeBloc>(context)
       ..add(Loadchallenges());
-    ChallengeDialog.titleEditingController = TextEditingController();
-    ChallengeDialog.bodyEditingController = TextEditingController();
-    ChallengeDialog.hashtagEditingController = TextEditingController();
+    _scrollController = ScrollController();
   }
 
   @override
@@ -49,6 +48,7 @@ class _ChallengeScreenState extends State<ChallengeScreen> {
                     );
                   } else if (state is AllchallengesLoaded) {
                     return ListView.builder(
+                      controller: _scrollController,
                         itemCount: state.challenges.length,
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
