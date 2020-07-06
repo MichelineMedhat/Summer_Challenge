@@ -182,7 +182,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           controller: _usernameController,
                           validator: (_) {
                             return !state.isUsernameValid
-                                ? 'Username Already Exists, ex:MichelineMedhat'
+                                ? 'Username Already Exists, ex:Margrette Azer'
                                 : null;
                           },
                         ),

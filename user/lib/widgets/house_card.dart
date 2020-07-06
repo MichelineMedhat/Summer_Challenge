@@ -1,32 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:summer_challenge/models/house.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class House extends StatelessWidget {
-  final String playlistUri;
-  final String houseName;
-  final String zoomLink;
-  final String zoomDate;
-  final String releaseDate;
-  final String imageName;
-  final String roomId;
-  final String roomPassword;
+class HouseCard extends StatelessWidget {
+  final House house;
 
-  House(
-      {this.playlistUri,
-      this.houseName,
-      this.zoomLink,
-      this.zoomDate,
-      this.imageName,
-      this.releaseDate,
-      this.roomId,
-      this.roomPassword});
+  const HouseCard({Key key, this.house}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       hoverColor: Colors.transparent,
-      onTap: () => playlistUri != null
-          ? launch('https://www.youtube.com/playlist?list=$playlistUri')
+      onTap: () => house.playlistUri != null
+          ? launch('https://www.youtube.com/playlist?list=${house.playlistUri}')
           : null,
       child: Container(
         margin: EdgeInsets.all(8),
@@ -45,7 +31,7 @@ class House extends StatelessWidget {
             ),
             clipBehavior: Clip.antiAlias,
             child: Image.asset(
-              'assets/$imageName',
+              'assets/${house.imageName}',
               fit: BoxFit.fitWidth,
             ),
           ),
@@ -54,7 +40,7 @@ class House extends StatelessWidget {
                   ? MediaQuery.of(context).size.width / 96
                   : MediaQuery.of(context).size.width / 20),
           Text(
-            '#${this.houseName}',
+            '#${house.houseName}',
             style: TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: MediaQuery.of(context).size.width > 576
@@ -78,21 +64,21 @@ class House extends StatelessWidget {
                             ? MediaQuery.of(context).size.width / 96
                             : MediaQuery.of(context).size.width / 24),
                   ),
-                  onTap: () => launch('$zoomLink')),
+                  onTap: () => launch('${house.zoomLink}')),
             ],
           ),
-          Text('Zoom Date: $zoomDate',
+          Text('Zoom Date: ${this.house.zoomDate}',
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
                       : MediaQuery.of(context).size.width / 20)),
             
-  Text('Room ID: $roomId',
+  Text('Room ID: ${house.roomId}',
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
                       : MediaQuery.of(context).size.width / 20)),
-  Text('Room Password: $roomPassword',
+  Text('Room Password: ${house.roomPassword}',
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
@@ -109,7 +95,7 @@ class House extends StatelessWidget {
                 ? MediaQuery.of(context).size.width / 40
                 : MediaQuery.of(context).size.width / 16,
             child: OutlineButton(
-              child: new Text('${this.releaseDate}',
+              child: new Text('${this.house.releaseDate}',
                   style: TextStyle(
                       color: Colors.blue,
                       fontSize: MediaQuery.of(context).size.width > 576
