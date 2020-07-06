@@ -1,5 +1,8 @@
+import 'package:admin/blocs/house_bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:summer_challenge/models/house.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../models/house.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HouseCard extends StatelessWidget {
@@ -72,13 +75,12 @@ class HouseCard extends StatelessWidget {
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
                       : MediaQuery.of(context).size.width / 20)),
-            
-  Text('Room ID: ${house.roomId}',
+          Text('Room ID: ${house.roomId}',
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
                       : MediaQuery.of(context).size.width / 20)),
-  Text('Room Password: ${house.roomPassword}',
+          Text('Room Password: ${house.roomPassword}',
               style: TextStyle(
                   fontSize: MediaQuery.of(context).size.width > 576
                       ? MediaQuery.of(context).size.width / 75
@@ -105,7 +107,16 @@ class HouseCard extends StatelessWidget {
               disabledBorderColor: Colors.blue,
               shape: StadiumBorder(),
             ),
-          )
+          ),
+          SizedBox(
+              height: MediaQuery.of(context).size.width > 576
+                  ? MediaQuery.of(context).size.width / 96
+                  : MediaQuery.of(context).size.width / 32),
+          FlatButton.icon(
+              onPressed: () => BlocProvider.of<HouseBloc>(context)
+                  .add(DeleteHouse(house: house)),
+              icon: Icon(Icons.delete),
+              label: Text('Delete'))
         ]),
       ),
     );

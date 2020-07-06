@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           physics: NeverScrollableScrollPhysics(),
           children: [
-            HousesPage(user: widget.user),
+            HousesPage(),
             HomePage(user: widget.user),
             ScoresPage(),
             ChallengesPage()

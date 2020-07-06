@@ -6,7 +6,7 @@ class House {
   final String zoomLink;
   final String zoomDate;
   final String releaseDate;
-  final String imageName;
+  final String imageUri;
   final String roomId;
   final String roomPassword;
 
@@ -16,7 +16,7 @@ class House {
       this.zoomLink,
       this.zoomDate,
       this.releaseDate,
-      this.imageName,
+      this.imageUri,
       this.roomId,
       this.roomPassword});
 
@@ -27,7 +27,7 @@ class House {
       zoomLink: doc['zoomLink'],
       zoomDate: doc['zoomDate'],
       releaseDate: doc['releaseDate'],
-      imageName: doc['imageName'],
+      imageUri: doc['imageUri'],
       roomId: doc['roomId'],
       roomPassword: doc['roomPassword'],
     );
@@ -40,7 +40,7 @@ class House {
       'zoomLink': zoomLink,
       'zoomDate': zoomDate,
       'releaseDate': releaseDate,
-      'imageName': imageName,
+      'imageUri': imageUri,
       'roomId': roomId,
       'roomPassword': roomPassword,
     };
@@ -54,7 +54,7 @@ class House {
       zoomLink" $zoomLink,
       zoomDate: $zoomDate,
       releaseDate: $releaseDate,
-      imageName: $imageName,
+      imageUri: $imageUri,
       roomId: $roomId,
       roomPassword: $roomPassword
     }''';

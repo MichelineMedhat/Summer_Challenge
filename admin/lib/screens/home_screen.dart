@@ -1,3 +1,4 @@
+import 'package:admin/screens/house_screen.dart';
 import 'package:admin/screens/score_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -31,6 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     size: 32,
                   ),
                 ),
+                Tab(
+                  icon: Icon(
+                    Icons.home,
+                    size: 32,
+                  ),
+                ),
               ],
             ),
           ),
@@ -39,10 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             ScoreScreen(),
             ChallengeScreen(),
+            HouseScreen(),
           ],
         ),
       ),
     );
   }
 }
-

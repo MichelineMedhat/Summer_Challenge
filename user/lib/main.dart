@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:summer_challenge/blocs/challenge_bloc/bloc.dart';
+import 'package:summer_challenge/blocs/house_bloc/bloc.dart';
 import 'package:summer_challenge/blocs/score_bloc/bloc.dart';
 
 import 'blocs/authentication_bloc/bloc.dart';
@@ -27,6 +28,9 @@ void main() {
     ),
     BlocProvider<ChallengeBloc>(
       create: (BuildContext context) => ChallengeBloc(),
+    ),
+    BlocProvider<HouseBloc>(
+      create: (BuildContext context) => HouseBloc(),
     )
   ], child: App(userRepository: userRepository)));
 }

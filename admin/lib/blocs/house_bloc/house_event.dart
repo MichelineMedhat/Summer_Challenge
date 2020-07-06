@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -30,8 +32,10 @@ class UpdateHouses extends HouseEvent {
 
 class AddHouse extends HouseEvent {
   final House house;
+  final Uint8List data;
+  final String extenison;
 
-  const AddHouse({@required this.house});
+  const AddHouse({@required this.house, @required this.data, @required this.extenison});
 
   @override
   List<Object> get props => [house];
@@ -53,13 +57,13 @@ class UpdateHouse extends HouseEvent {
 }
 
 class DeleteHouse extends HouseEvent {
-  final String housename;
+  final House house;
 
-  const DeleteHouse({@required this.housename});
-
-  @override
-  List<Object> get props => [housename];
+  const DeleteHouse({@required this.house});
 
   @override
-  String toString() => 'DeleteHouse { housename: $housename }';
+  List<Object> get props => [house];
+
+  @override
+  String toString() => 'DeleteHouse { house: $house }';
 }

@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
 
 import '../models/house.dart';
 
@@ -25,7 +28,19 @@ class HouseRepository {
         .updateData(house.toMap());
   }
 
-  static Future<void> deleteHouse(String houseName) async {
-    await _db.collection('houses').document(houseName).delete();
+  static Future<void> deleteHouse(House house) async {
+    await fb.storage().refFromURL(house.imageUri).delete();
+    await _db.collection('houses').document(house.houseName).delete();
+  }
+
+    static Future<Uri> uploadImageFile(
+      Uint8List imageBytes, String houseName, String extenstion) async {
+    fb.StorageReference storageRef =
+        fb.storage().ref('houses/$houseName$extenstion');
+    fb.UploadTaskSnapshot uploadTaskSnapshot =
+        await storageRef.put(imageBytes).future;
+
+    Uri imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
+    return imageUri;
   }
 }

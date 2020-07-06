@@ -33,7 +33,6 @@ class PostRepository {
     fb.UploadTaskSnapshot uploadTaskSnapshot =
         await storageRef.put(imageBytes).future;
 
-    print('ana gwa al repo:  $imageName $extenstion');
     Uri imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
     return imageUri;
   }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:typed_data';
 
 import 'package:admin/models/house.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,9 +20,9 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
     } else if (event is UpdateHouses) {
       yield AllHousesLoaded(houses: event.houses);
     } else if (event is AddHouse) {
-      yield* _mapAddHouseEventToState(event.house);
+      yield* _mapAddHouseEventToState(event.house, event.data, event.extenison);
     } else if (event is DeleteHouse) {
-      yield* _mapDeleteEventToState(event.housename);
+      yield* _mapDeleteEventToState(event.house);
     } else if (event is UpdateHouse) {
       yield* _mapUpdateEventToState(event.house);
     }
@@ -33,8 +34,9 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
         .listen((houses) => add(UpdateHouses(houses: houses)));
   }
 
-  Stream<HouseState> _mapAddHouseEventToState(House house) async* {
+  Stream<HouseState> _mapAddHouseEventToState(House house, Uint8List data, String extenstion) async* {
     try {
+      house.imageUri =  await  HouseRepository.uploadImageFile(data, house.houseName, extenstion).then((value) => value.toString());
       await HouseRepository.addHouse(house);
       add(LoadHouses());
     } catch (err) {
@@ -43,9 +45,9 @@ class HouseBloc extends Bloc<HouseEvent, HouseState> {
     }
   }
 
-  Stream<HouseState> _mapDeleteEventToState(String housename) async* {
+  Stream<HouseState> _mapDeleteEventToState(House house) async* {
     try {
-      await HouseRepository.deleteHouse(housename);
+      await HouseRepository.deleteHouse(house);
       add(LoadHouses());
     } catch (err) {
       yield HouseDeleteFailure();
