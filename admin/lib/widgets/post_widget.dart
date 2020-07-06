@@ -71,15 +71,18 @@ class _PostWidgetState extends State<PostWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 30,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                          MediaQuery.of(context).size.width / 12),
-                      child: Image.network(widget.post.userProfilePicture),
-                    ),
-                  ) ??
-                  Container(),
+                backgroundColor: Colors.transparent,
+                radius: 30,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.width / 12),
+                  child: widget.post.userProfilePicture != null
+                      ? Image.network(
+                    widget.post.userProfilePicture,
+                  )
+                      : Image.asset("assets/pp.png"),
+                ),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

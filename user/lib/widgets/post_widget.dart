@@ -51,15 +51,18 @@ class PostWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 30,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                          MediaQuery.of(context).size.width / 12),
-                      child: Image.network(post.userProfilePicture),
-                    ),
-                  ) ??
-                  Container(),
+                backgroundColor: Colors.transparent,
+                radius: 30,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                      MediaQuery.of(context).size.width / 12),
+                  child: post.userProfilePicture != null
+                      ? Image.network(
+                          post.userProfilePicture,
+                        )
+                      : Image.asset("assets/pp.png"),
+                ),
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,

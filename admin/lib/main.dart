@@ -1,6 +1,7 @@
 import 'package:admin/blocs/challenge_bloc/bloc.dart';
 import 'package:admin/blocs/house_bloc/bloc.dart';
 import 'package:admin/blocs/post_bloc/post_bloc.dart';
+import 'package:admin/blocs/user_bloc/bloc.dart';
 import 'package:admin/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,9 @@ void main() {
     ),
     BlocProvider<HouseBloc>(
       create: (BuildContext context) => HouseBloc(),
+    ),
+    BlocProvider<UserBloc>(
+      create: (BuildContext context) => UserBloc(),
     )
   ], child: App()));
 }
