@@ -12,7 +12,13 @@ class ChallengeDialog extends StatefulWidget {
 }
 
 class _ChallengeDialogState extends State<ChallengeDialog> {
-
+@override
+  void initState() {
+    super.initState();
+    ChallengeDialog.titleEditingController = TextEditingController();
+    ChallengeDialog.bodyEditingController = TextEditingController();
+    ChallengeDialog.hashtagEditingController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
