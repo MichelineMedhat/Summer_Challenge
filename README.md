@@ -45,7 +45,7 @@ function get_config(type) {
 }
 ```
 
-- Call get_confige method in [user -> web -> index.html].
+- Call get_confige method in [web -> index.html].
 
 ```js
     <script>
