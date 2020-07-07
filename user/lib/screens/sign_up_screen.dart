@@ -2,15 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path/path.dart' as Path;
 import 'package:image_picker_web/image_picker_web.dart';
+import 'package:path/path.dart' as Path;
 
 import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/sign_up_bloc/bloc.dart';
 import '../models/user.dart';
 import '../repositories/user_repository.dart';
-import '../widgets/rounded_button.dart';
 import '../widgets/outlined_text_field.dart';
+import '../widgets/rounded_button.dart';
 
 class SignUpScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -48,7 +48,6 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _secretKeyController = TextEditingController();
 
   SignUpBloc _signUpBloc;
-  Image pickedImage;
 
   bool get isPopulated =>
       _phoneNumberController.text.isNotEmpty &&
@@ -68,19 +67,18 @@ class _SignUpFormState extends State<SignUpForm> {
     _usernameController.addListener(_onUsernameChanged);
     _passwordController.addListener(_onPasswordChanged);
     _secretKeyController.addListener(_onSecretKeyChanged);
-    pickedImage = Image.asset('assets/pp.png');
   }
 
   String extenstion;
   bool isImagePicked = false;
   Uint8List data;
+
   pickImage() async {
     var mediaData = await ImagePickerWeb.getImageInfo;
     extenstion = Path.extension(mediaData.fileName);
     if (mediaData != null) {
       setState(() {
         data = mediaData.data;
-        pickedImage = Image.memory(data);
         isImagePicked = true;
       });
     }
@@ -143,18 +141,12 @@ class _SignUpFormState extends State<SignUpForm> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            AnimatedSwitcher(
-                              duration: Duration(milliseconds: 200),
-                              switchInCurve: Curves.easeIn,
-                              child: CircleAvatar(
-                                    backgroundColor: Colors.transparent,
-                                    radius: 100,
-                                    child: ClipOval(
-                                      child: pickedImage,
-                                    ),
-                                  ) ??
-                                  Container(),
-                            ),
+                            CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                radius: 100,
+                                backgroundImage: isImagePicked
+                                    ? MemoryImage(data)
+                                    : AssetImage('assets/pp.png')),
                             Padding(
                               padding: EdgeInsets.only(top: 60.0),
                               child: IconButton(
@@ -173,7 +165,9 @@ class _SignUpFormState extends State<SignUpForm> {
                           textKey: 'PhoneNumber',
                           controller: _phoneNumberController,
                           validator: (_) {
-                            return !state.isPhoneNumberValid ? 'Required*' : null;
+                            return !state.isPhoneNumberValid
+                                ? 'Required*'
+                                : null;
                           },
                         ),
                         SizedBox(height: 24.0),
@@ -208,7 +202,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                 : null;
                           },
                         ),
-                         SizedBox(height: 32.0),
+                        SizedBox(height: 32.0),
                         RoundedButton(
                           textKey: 'Sign up',
                           onPressed: isSignUpButtonEnabled(state)
