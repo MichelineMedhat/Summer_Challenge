@@ -9,6 +9,7 @@ class PostWidget extends StatefulWidget {
   final Post post;
 
   const PostWidget({Key key, this.post}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _PostWidgetState();
 }
@@ -71,18 +72,15 @@ class _PostWidgetState extends State<PostWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 30,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                      MediaQuery.of(context).size.width / 12),
-                  child: widget.post.userProfilePicture != null
-                      ? Image.network(
-                    widget.post.userProfilePicture,
-                  )
-                      : Image.asset("assets/pp.png"),
-                ),
+                backgroundColor: Colors.white70,
+                radius: MediaQuery.of(context).size.width > 567 ? 30 : 24,
+                backgroundImage: widget.post.userProfilePicture != null
+                    ? NetworkImage(
+                        widget.post.userProfilePicture,
+                      )
+                    : AssetImage("assets/pp.png"),
               ),
+              SizedBox(width: 16),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,6 +92,7 @@ class _PostWidgetState extends State<PostWidget> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(width: 4),
                   widget.post.hashtag.isNotEmpty
                       ? Container(
                           child: Text(
