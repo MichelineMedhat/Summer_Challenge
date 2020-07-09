@@ -10,12 +10,13 @@ import '../util/auth.dart';
 class UserRepository {
   static final Auth _auth = Auth.instance;
   static final Firestore _db = Firestore.instance;
+  static DocumentSnapshot lastPostSnapshot;
 
   Future<void> signIn(String username, String password) async {
     await _auth.signIn(username, password);
   }
 
-   Future<void> signUp(User user) async {
+  Future<void> signUp(User user) async {
     await _auth.signUp(user);
   }
 
@@ -32,7 +33,7 @@ class UserRepository {
     return await _auth.currentUser;
   }
 
-  Future<void> updateProfile( User user) async{
+  Future<void> updateProfile(User user) async {
     return await _auth.updateProfile(user);
   }
 
@@ -44,23 +45,52 @@ class UserRepository {
 
     return docs.documents.isNotEmpty;
   }
- 
-  Future<Uri> uploadImageFile(Uint8List imageBytes, String imageName, String extenstion) async {
-    fb.StorageReference storageRef = fb.storage().ref('images/$imageName$extenstion');
-    fb.UploadTaskSnapshot uploadTaskSnapshot = await storageRef.put(imageBytes).future;
-    
+
+  Future<Uri> uploadImageFile(
+      Uint8List imageBytes, String imageName, String extenstion) async {
+    fb.StorageReference storageRef =
+        fb.storage().ref('images/$imageName$extenstion');
+    fb.UploadTaskSnapshot uploadTaskSnapshot =
+        await storageRef.put(imageBytes).future;
+
     Uri imageUri = await uploadTaskSnapshot.ref.getDownloadURL();
     return imageUri;
-}
-
-  static Stream<List<User>> getScores() {
-    return _db
-        .collection('users')
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.documents.map((doc) => User.fromDocument(doc)).toList()
-        ..sort((a, b) => b.score.compareTo(a.score));
-    });
   }
 
+  static Stream<List<User>> getScores() {
+    if (lastPostSnapshot == null) {
+      return _db
+          .collection('users')
+          .orderBy("score", descending: true)
+          .orderBy("username")
+          .limit(10)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.documents.length != 0) {
+          lastPostSnapshot = snapshot.documents[snapshot.documents.length - 1];
+        }
+        return snapshot.documents.map((doc) => User.fromDocument(doc)).toList()
+          ..sort((a, b) => b.score.compareTo(a.score));
+      });
+    } else {
+      return _db
+          .collection('users')
+          .orderBy("score", descending: true)
+          .orderBy("username")
+          .startAfterDocument(lastPostSnapshot)
+          .limit(10)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.documents.length != 0) {
+          lastPostSnapshot = snapshot.documents[snapshot.documents.length - 1];
+        }
+        return snapshot.documents.map((doc) => User.fromDocument(doc)).toList()
+          ..sort((a, b) => b.score.compareTo(a.score));
+      });
+    }
+  }
+
+  static void disposePagination() {
+    lastPostSnapshot = null;
+  }
 }

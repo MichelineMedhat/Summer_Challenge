@@ -10,20 +10,27 @@ abstract class ScoreEvent extends Equatable {
 }
 
 class LoadScores extends ScoreEvent {
+  final List<User> cachedUsers;
+
+  LoadScores({@required this.cachedUsers});
+
+  @override
+  List<Object> get props => [cachedUsers];
   @override
   String toString() {
-    return 'Loadchallenges';
+    return 'Loadchallenges { cachedUsers: $cachedUsers }';
   }
 }
 
 class UpdateScores extends ScoreEvent {
   final List<User> users;
+  final bool usersEnd;
 
-  const UpdateScores({@required this.users});
-
-  @override
-  List<Object> get props => [users];
+  const UpdateScores({@required this.users, this.usersEnd = true});
 
   @override
-  String toString() => 'UpdateScores { users: $users }';
+  List<Object> get props => [users, usersEnd];
+
+  @override
+  String toString() => 'UpdateScores { users: $users, usersEnd: $usersEnd }';
 }

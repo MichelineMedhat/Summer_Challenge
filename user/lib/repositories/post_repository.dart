@@ -25,7 +25,7 @@ class PostRepository {
       return _db
           .collection('posts')
           .orderBy("timestamp", descending: true)
-          .limit(10)
+          .limit(8)
           .snapshots()
           .map((snapshot) {
         if (snapshot.documents.length != 0) {
@@ -39,7 +39,7 @@ class PostRepository {
           .collection('posts')
           .orderBy("timestamp", descending: true)
           .startAfterDocument(lastPostSnapshot)
-          .limit(10)
+          .limit(8)
           .snapshots()
           .map((snapshot) {
         if (snapshot.documents.length != 0) {
