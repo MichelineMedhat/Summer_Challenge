@@ -7,6 +7,7 @@ import '../models/post.dart';
 
 class PostRepository {
   static final Firestore _db = Firestore.instance;
+  static DocumentSnapshot lastPostSnapshot;
 
   static Stream<List<Post>> getUserPost(String username) {
     return _db
@@ -20,10 +21,38 @@ class PostRepository {
   }
 
   static Stream<List<Post>> getAllPosts() {
-    return _db.collection('posts').snapshots().map((snapshot) {
-      return snapshot.documents.map((doc) => Post.fromDocument(doc)).toList()
-        ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
-    });
+    if (lastPostSnapshot == null) {
+      return _db
+          .collection('posts')
+          .orderBy("timestamp", descending: true)
+          .limit(10)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.documents.length != 0) {
+          lastPostSnapshot = snapshot.documents[snapshot.documents.length - 1];
+        }
+        return snapshot.documents.map((doc) => Post.fromDocument(doc)).toList()
+          ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+      });
+    } else {
+      return _db
+          .collection('posts')
+          .orderBy("timestamp", descending: true)
+          .startAfterDocument(lastPostSnapshot)
+          .limit(10)
+          .snapshots()
+          .map((snapshot) {
+        if (snapshot.documents.length != 0) {
+          lastPostSnapshot = snapshot.documents[snapshot.documents.length - 1];
+        }
+        return snapshot.documents.map((doc) => Post.fromDocument(doc)).toList()
+          ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
+      });
+    }
+  }
+
+  static void disposePagination(){
+    lastPostSnapshot = null;
   }
 
   static Future<Uri> uploadImageFile(
@@ -37,27 +66,28 @@ class PostRepository {
     return imageUri;
   }
 
-  static Future<void> addPost(Post post) async { 
+  static Future<void> addPost(Post post) async {
     DocumentReference ref = _db.collection('posts').document();
     post.id = ref.documentID;
     post.graded = '0';
     ref.setData(post.toMap());
-
   }
 
-  static Stream<List<Post>> getUsersFilter(String username)  {
+  static Stream<List<Post>> getUsersFilter(String username) {
     return _db.collection('posts').snapshots().map((snapshot) {
       return snapshot.documents
           .map((doc) => Post.fromDocument(doc))
-          .where((element) => element.username == username).toList();
+          .where((element) => element.username == username)
+          .toList();
     });
   }
 
-    static Stream<List<Post>> getHashtagsFilter(String hashtag) {
+  static Stream<List<Post>> getHashtagsFilter(String hashtag) {
     return _db.collection('posts').snapshots().map((snapshot) {
       return snapshot.documents
           .map((doc) => Post.fromDocument(doc))
-          .where((element) => element.hashtag == hashtag).toList();
+          .where((element) => element.hashtag == hashtag)
+          .toList();
     });
   }
 }

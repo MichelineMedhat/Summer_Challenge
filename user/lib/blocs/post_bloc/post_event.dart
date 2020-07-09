@@ -7,27 +7,38 @@ import '../../models/post.dart';
 
 abstract class PostEvent extends Equatable {
   const PostEvent();
+
   @override
   List<Object> get props => [];
 }
 
 class LoadPosts extends PostEvent {
+  final List<Post> cachedPosts;
+
+  LoadPosts({@required this.cachedPosts});
+
+  @override
+  List<Object> get props => [cachedPosts];
+
   @override
   String toString() {
-    return 'LoadPosts';
+    return 'LoadPosts { cachedPosts: $cachedPosts }';
   }
 }
 
 class UpdatePosts extends PostEvent {
   final List<Post> posts;
+  final bool postsEnd;
 
-  const UpdatePosts({@required this.posts});
-
-  @override
-  List<Object> get props => [posts];
+  const UpdatePosts({@required this.posts, this.postsEnd = true});
 
   @override
-  String toString() => 'UpdatePosts { posts: $posts }';
+  List<Object> get props => [posts, postsEnd];
+
+  @override
+  String toString() {
+    return 'UpdatePosts{posts: $posts, postsEnd: $postsEnd}';
+  }
 }
 
 class AddPost extends PostEvent {

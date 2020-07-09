@@ -17,14 +17,15 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController _filterTextEditController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
   PostBloc postBloc;
 
   @override
   void initState() {
     super.initState();
     _filterTextEditController.addListener(_onFilerChanged);
-    postBloc = BlocProvider.of<PostBloc>(context)..add(LoadPosts());
+    postBloc = BlocProvider.of<PostBloc>(context)
+      ..add(LoadPosts(cachedPosts: []));
   }
 
   @override
@@ -110,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         );
-                      } else if (state is AllPostsLoaded) {
+                      } else if (state is PostsLoaded) {
                         if (state.posts.isEmpty) {
                           return Center(
                               child: Row(
@@ -138,14 +139,61 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ));
                         } else {
-                          return ListView.builder(
-                              itemCount: state.posts.length,
-                              scrollDirection: Axis.vertical,
-                              controller: _scrollController,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return PostWidget(post: state.posts[index]);
-                              });
+                          return Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ListView.builder(
+                                    itemCount: state.posts.length,
+                                    scrollDirection: Axis.vertical,
+                                    controller: _scrollController,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return PostWidget(
+                                          post: state.posts[index]);
+                                    }),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.width >
+                                            576
+                                        ? MediaQuery.of(context).size.width / 96
+                                        : MediaQuery.of(context).size.width /
+                                            20),
+                                state.postsEnd
+                                    ? Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                            Icon(Icons.error_outline,
+                                                color: Colors.orange),
+                                            SizedBox(width: 4),
+                                            Text(
+                                              "No more posts!",
+                                              style: TextStyle(
+                                                  color: Colors.orange),
+                                            ),
+                                          ])
+                                    : FlatButton.icon(
+                                        onPressed: () {
+                                          BlocProvider.of<PostBloc>(context)
+                                              .add(LoadPosts(
+                                                  cachedPosts: state.posts));
+                                        },
+                                        icon: Icon(Icons.refresh,
+                                            color: Colors.orange),
+                                        label: Text(
+                                          "See More",
+                                          style:
+                                              TextStyle(color: Colors.orange),
+                                        )),
+                                SizedBox(
+                                    height: MediaQuery.of(context).size.width >
+                                            576
+                                        ? MediaQuery.of(context).size.width / 88
+                                        : MediaQuery.of(context).size.width /
+                                            10),
+                              ]);
                         }
                       } else {
                         return Text('Please Check your internet Connection');
@@ -165,7 +213,7 @@ class _HomePageState extends State<HomePage> {
 
   void _onFilerChanged() {
     if (_filterTextEditController.text == '') {
-      BlocProvider.of<PostBloc>(context).add(LoadPosts());
+      BlocProvider.of<PostBloc>(context).add(LoadPosts(cachedPosts: []));
     }
   }
 
