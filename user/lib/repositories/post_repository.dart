@@ -73,6 +73,13 @@ class PostRepository {
     ref.setData(post.toMap());
   }
 
+  static Future<void> deletePost(Post post) async {
+    if (post.uri != null) {
+      await fb.storage().refFromURL(post.uri).delete();
+    }
+    await _db.collection('posts').document(post.id).delete();
+  }
+
   static Stream<List<Post>> getUsersFilter(String username) {
     return _db.collection('posts').snapshots().map((snapshot) {
       return snapshot.documents

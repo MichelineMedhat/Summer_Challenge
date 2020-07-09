@@ -25,6 +25,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       yield* _mapAddScoreToState(event.username, event.score, event.post);
     } else if (event is ScoreChanged) {
       yield* _mapScoreChangedToState(event.score);
+    }else if (event is DeletePost) {
+      yield* _mapDeletePostsToState(event.post);
     }
   }
 
@@ -55,4 +57,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   Stream<PostState> _mapScoreChangedToState(double score) async* {
      Validators.isValidScore(score.toString());
   }
+
+  Stream<PostState> _mapDeletePostsToState(Post post) async* {
+    await PostRepository.deletePost(post);
+  }
+
 }

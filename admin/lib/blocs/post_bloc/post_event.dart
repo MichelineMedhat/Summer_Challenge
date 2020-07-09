@@ -46,6 +46,22 @@ class AddPost extends PostEvent {
       'AddPost { post: $post, image: $image, extenstion: $extenstion }';
 }
 
+
+class DeletePost extends PostEvent {
+  final Post post;
+
+  const DeletePost({@required this.post});
+
+  @override
+  List<Object> get props => [post];
+
+  @override
+  String toString() {
+    return 'DeletePost{post: $post }';
+  }
+}
+
+
 class FilterChanged extends PostEvent {
   final String filter;
 

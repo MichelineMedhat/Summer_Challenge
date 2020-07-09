@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase/firebase.dart' as fb;
 
 import '../models/post.dart';
 import '../models/user.dart';
@@ -6,7 +7,7 @@ import '../models/user.dart';
 class PostRepository {
   static final Firestore _db = Firestore.instance;
 
- static Stream<List<Post>> getAllPosts() {
+  static Stream<List<Post>> getAllPosts() {
     return _db
         .collection('posts')
         .where('graded', isEqualTo: '0')
@@ -42,5 +43,12 @@ class PostRepository {
           .where((element) => element.hashtag == hashtag)
           .toList();
     });
+  }
+
+  static Future<void> deletePost(Post post) async {
+    if (post.uri != null) {
+      await fb.storage().refFromURL(post.uri).delete();
+    }
+    await _db.collection('posts').document(post.id).delete();
   }
 }

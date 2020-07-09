@@ -41,6 +41,20 @@ class UpdatePosts extends PostEvent {
   }
 }
 
+class DeletePost extends PostEvent {
+  final Post post;
+
+  const DeletePost({@required this.post});
+
+  @override
+  List<Object> get props => [post];
+
+  @override
+  String toString() {
+    return 'DeletePost{post: $post }';
+  }
+}
+
 class AddPost extends PostEvent {
   final Post post;
   final Uint8List image;

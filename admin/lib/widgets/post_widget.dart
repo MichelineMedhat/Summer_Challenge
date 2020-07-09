@@ -81,32 +81,41 @@ class _PostWidgetState extends State<PostWidget> {
                     : AssetImage("assets/pp.png"),
               ),
               SizedBox(width: 16),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '@${widget.post.username}',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '@${widget.post.username}',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 4),
-                  widget.post.hashtag.isNotEmpty
-                      ? Container(
-                          child: Text(
-                            '#${widget.post.hashtag}',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 5,
-                            style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      : Container(),
-                ],
+                    SizedBox(width: 4),
+                    widget.post.hashtag.isNotEmpty
+                        ? Container(
+                            child: Text(
+                              '#${widget.post.hashtag}',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 5,
+                              style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : Container(),
+                  ],
+                ),
               ),
+              IconButton(
+                  icon: Icon(Icons.delete_forever),
+                  color: Colors.blue,
+                  onPressed: () => BlocProvider.of<PostBloc>(context).add(
+                        DeletePost(post: widget.post),
+                      ))
             ],
           )
         ],
