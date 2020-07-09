@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:summer_challenge/blocs/authentication_bloc/authentication_state.dart';
+import 'package:summer_challenge/blocs/authentication_bloc/bloc.dart';
+import 'package:summer_challenge/blocs/post_bloc/bloc.dart';
 
 import '../models/post.dart';
 
@@ -60,32 +64,47 @@ class PostWidget extends StatelessWidget {
                     : AssetImage("assets/pp.png"),
               ),
               SizedBox(width: 14),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '@${post.username}',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '@${post.username}',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(width: 4),
-                  post.hashtag.isNotEmpty
-                      ? Container(
-                          child: Text(
-                            '#${post.hashtag}',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 5,
-                            style: TextStyle(
-                                color: Colors.orange,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        )
-                      : Container(),
-                ],
+                    SizedBox(width: 4),
+                    post.hashtag.isNotEmpty
+                        ? Container(
+                            child: Text(
+                              '#${post.hashtag}',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 5,
+                              style: TextStyle(
+                                  color: Colors.orange,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : Container(),
+                  ],
+                ),
               ),
+              post.username ==
+                      (BlocProvider.of<AuthenticationBloc>(context).state
+                              as Authenticated)
+                          .user
+                          .username
+                  ? IconButton(
+                      icon: Icon(Icons.delete_forever),
+                      color: Colors.orange,
+                      onPressed: () => BlocProvider.of<PostBloc>(context).add(
+                            DeletePost(post: post),
+                          ))
+                  : Container()
             ],
           )
         ],

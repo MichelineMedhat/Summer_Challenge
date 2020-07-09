@@ -23,6 +23,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       yield PostsLoaded(posts: event.posts, postsEnd: event.postsEnd);
     } else if (event is FilterChanged) {
       yield* _mapFilterChangedToState(event.filter);
+    } else if (event is DeletePost) {
+      yield* _mapDeletePostsToState(event.post);
     }
   }
 
@@ -50,6 +52,10 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         add(UpdatePosts(
             posts: cachedPosts + fetchedPosts,
             postsEnd: fetchedPosts.isEmpty)));
+  }
+
+  Stream<PostState> _mapDeletePostsToState(Post post) async* {
+    await PostRepository.deletePost(post);
   }
 
   Stream<PostState> _mapAddPostEventToState(
