@@ -18,9 +18,9 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     if (event is AddPost) {
       yield* _mapAddPostEventToState(event.post, event.image, event.extenstion);
     } else if (event is LoadPosts) {
-      yield* _mapLoadPostsToState();
+      yield* _mapLoadPostsToState(event.cachedPosts);
     } else if (event is UpdatePosts) {
-      yield AllPostsLoaded(posts: event.posts);
+      yield PostsLoaded(posts: event.posts, postsEnd: event.postsEnd);
     } else if (event is FilterChanged) {
       yield* _mapFilterChangedToState(event.filter);
     }
@@ -40,10 +40,16 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     }
   }
 
-  Stream<PostState> _mapLoadPostsToState() async* {
+  Stream<PostState> _mapLoadPostsToState(List<Post> cachedPosts) async* {
+    yield AllPostsLoading();
+    if (cachedPosts.isEmpty) {
+      PostRepository.disposePagination();
+    }
     _postSubscription?.cancel();
-    _postSubscription = PostRepository.getAllPosts()
-        .listen((posts) => add(UpdatePosts(posts: posts)));
+    _postSubscription = PostRepository.getAllPosts().listen((fetchedPosts) =>
+        add(UpdatePosts(
+            posts: cachedPosts + fetchedPosts,
+            postsEnd: fetchedPosts.isEmpty)));
   }
 
   Stream<PostState> _mapAddPostEventToState(

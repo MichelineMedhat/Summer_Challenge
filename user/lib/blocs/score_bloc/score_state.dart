@@ -16,14 +16,15 @@ class ScoresLoadInProgress extends ScoreState {
 
 class ScoresLoadSuccess extends ScoreState {
   final List<User> users;
+  final bool usersEnd;
 
-  const ScoresLoadSuccess({@required this.users});
-
-  @override
-  List<Object> get props => [users];
+  const ScoresLoadSuccess({@required this.users, @required this.usersEnd});
 
   @override
-  String toString() => 'ScoresLoadSuccess { users: $users }';
+  List<Object> get props => [users, usersEnd];
+
+  @override
+  String toString() => 'ScoresLoadSuccess { users: $users, usersEnd: $usersEnd }';
 }
 
 class ScoresLoadFailure extends ScoreState {

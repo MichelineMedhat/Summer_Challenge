@@ -15,16 +15,19 @@ class AllPostsLoading extends PostState {
   String toString() => 'AllPostsLoading';
 }
 
-class AllPostsLoaded extends PostState {
+class PostsLoaded extends PostState {
   final List<Post> posts;
+  final bool postsEnd;
 
-  const AllPostsLoaded({@required this.posts});
-
-  @override
-  List<Object> get props => [posts];
+  const PostsLoaded({@required this.posts, @required this.postsEnd});
 
   @override
-  String toString() => 'AllPostsLoaded { posts: $posts }';
+  List<Object> get props => [posts, postsEnd];
+
+  @override
+  String toString() {
+    return 'PostsLoaded{posts: $posts, postsEnd: $postsEnd}';
+  }
 }
 
 class AllPostsNotLoaded extends PostState {
