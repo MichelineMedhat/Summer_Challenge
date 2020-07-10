@@ -51,7 +51,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     _postSubscription = PostRepository.getAllPosts().listen((fetchedPosts) =>
         add(UpdatePosts(
             posts: cachedPosts + fetchedPosts,
-            postsEnd: fetchedPosts.isEmpty)));
+            postsEnd: fetchedPosts.isEmpty ||
+                fetchedPosts.length < PostRepository.POSTS_LIMIT)));
   }
 
   Stream<PostState> _mapDeletePostsToState(Post post) async* {

@@ -8,6 +8,7 @@ import '../models/post.dart';
 class PostRepository {
   static final Firestore _db = Firestore.instance;
   static DocumentSnapshot lastPostSnapshot;
+  static const POSTS_LIMIT = 8;
 
   static Stream<List<Post>> getUserPost(String username) {
     return _db
@@ -25,7 +26,7 @@ class PostRepository {
       return _db
           .collection('posts')
           .orderBy("timestamp", descending: true)
-          .limit(8)
+          .limit(POSTS_LIMIT)
           .snapshots()
           .map((snapshot) {
         if (snapshot.documents.length != 0) {
@@ -39,7 +40,7 @@ class PostRepository {
           .collection('posts')
           .orderBy("timestamp", descending: true)
           .startAfterDocument(lastPostSnapshot)
-          .limit(8)
+          .limit(POSTS_LIMIT)
           .snapshots()
           .map((snapshot) {
         if (snapshot.documents.length != 0) {

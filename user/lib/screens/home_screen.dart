@@ -89,6 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
               content: Text(state.errorMessage),
               backgroundColor: Colors.red,
             ));
+            BlocProvider.of<PostBloc>(context).add(LoadPosts(cachedPosts: []));
           }
         },
         child: PageView(
@@ -166,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
             onPressed: () {
               hashtagEditingController = PostDialog.hashtagEditingController;
               statusEditingController = PostDialog.statusEditingController;
+
               Post post = Post(
                   status: statusEditingController.text,
                   hashtag: hashtagEditingController.text,
