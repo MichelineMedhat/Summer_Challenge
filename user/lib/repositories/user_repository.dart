@@ -57,6 +57,42 @@ class UserRepository {
     return imageUri;
   }
 
+  Future<void> deleteProfilePicture(String uri) async {
+    await fb.storage().refFromURL(uri).delete();
+  }
+
+  Future<void> updateProfilePicture(User user, Uint8List imageBytes,
+      String imageName, String extenstion) async {
+    if (user.profilePicture != null) {
+      await deleteProfilePicture(user.profilePicture);
+    }
+    uploadImageFile(imageBytes, imageName, extenstion).then((uri) {
+      user.profilePicture = uri.toString();
+      _db
+          .collection('users')
+          .document(user.username)
+          .updateData({'profilePicture': user.profilePicture});
+
+      _db
+          .collection('posts')
+          .where('username', isEqualTo: user.username)
+          .getDocuments()
+          .then((value) {
+        value.documents.forEach((element) async {
+          await _db
+              .collection("posts")
+              .document(element["id"])
+              .updateData({'userProfilePicture': user.profilePicture});
+        });
+      });
+    });
+  }
+
+  static Future<String> getProfilePicture(String username) async {
+    var docRef = await _db.collection('users').document(username).get();
+    return docRef["profilePicture"];
+  }
+
   static Stream<List<User>> getScores() {
     if (lastPostSnapshot == null) {
       return _db

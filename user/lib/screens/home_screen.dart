@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:summer_challenge/screens/profile_page.dart';
 
 import '../blocs/authentication_bloc/bloc.dart';
 import '../blocs/post_bloc/bloc.dart';
@@ -58,6 +59,14 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.account_circle),
             onPressed: () {
+              HomeScreen.pageController.animateToPage(4,
+                  duration: Duration(milliseconds: 400),
+                  curve: Curves.fastOutSlowIn);
+            },
+          ),
+          IconButton(
+            icon: FaIcon(FontAwesomeIcons.addressCard, color: Colors.white),
+            onPressed: () {
               HomeScreen.pageController.animateToPage(1,
                   duration: Duration(milliseconds: 400),
                   curve: Curves.fastOutSlowIn);
@@ -90,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
             HousesPage(),
             HomePage(user: widget.user),
             ScoresPage(),
-            ChallengesPage()
+            ChallengesPage(),
+            ProfilePage(user: widget.user)
           ],
         ),
       ),
