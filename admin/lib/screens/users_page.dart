@@ -112,7 +112,7 @@ class _UsersPageState extends State<StatefulWidget> {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       subtitle: Text(
-                                        "Score: ${state.users[index].score}",
+                                        "Number: ${state.users[index].phoneNumber}",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                       trailing: InkWell(
