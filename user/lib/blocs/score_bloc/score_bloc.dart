@@ -29,7 +29,6 @@ class ScoreBloc extends Bloc<ScoreEvent, ScoreState> {
     }
     _postSubscription?.cancel();
     _postSubscription = UserRepository.getScores().listen((fetchedUsers)  {
-      print(fetchedUsers);
       add(
 
         UpdateScores(

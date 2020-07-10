@@ -108,7 +108,7 @@ class _ScorePageState extends State<StatefulWidget> {
                                                 color: Colors.orange),
                                             SizedBox(width: 4),
                                             Text(
-                                              "No more posts!",
+                                              "No more Scores!",
                                               style: TextStyle(
                                                   color: Colors.orange),
                                             ),
